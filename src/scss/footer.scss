@@ -73,14 +73,23 @@
 
   // .footer__map
   &__map {
+    display: block;
     overflow: hidden;
     border-radius: toRem(30);
     aspect-ratio: 320/165;
     @media (min-width:$tablet){
       width: toRem(320);
     }
-    iframe {
+    @media (any-hover: hover){
+      &:hover{
+        img {
+          transform: scale(1.1);
+        }
+      }
+    }
+    img {
       @extend %ibg;
+      transition: transform .65s ease;
     }
   }
 
