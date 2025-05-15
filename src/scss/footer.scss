@@ -48,7 +48,7 @@
     font-weight: 800;
     line-height: 1.2;
     background-size: 100% 100%;
-    transition: background-size .65s cubic-bezier(.2, 1.11, .39, 1.01) 0s;
+    transition: background-size .3s ease;
     -webkit-background-clip: text;
     background-repeat: no-repeat;
     -webkit-text-fill-color: rgba(255, 255, 255, .1);
@@ -60,7 +60,7 @@
 
     @media (any-hover: hover) {
       &:hover {
-        background-size: 200% 100%;
+        background-size: 350% 100%;
       }
     }
   }

@@ -1,14 +1,67 @@
-<div id="popup" aria-hidden="true" class="popup">
-	<div class="popup__wrapper">
-		<div class="popup__content">
-			<button data-close type="button" class="popup__close">
-				<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path opacity="0.850056" d="M1.73333 1.48883L21.5469 21.0288" stroke="#979797" stroke-linecap="square" />
-					<path opacity="0.850056" d="M21.2667 1.48883L1.45309 21.0288" stroke="#979797" stroke-linecap="square" />
-				</svg>
+<div id="popupForm" class="popup popup-tender">
+	<div class="popup__wrapper popup-tender__wrapper">
+		<div class="popup__content popup-tender__content">
+			<button data-close type="button" class="popup__close" aria-label="close modal">
 			</button>
-			<div class="popup__text">
-				Popup content
+			<form class="popup-tender__form form-popup-tender"  data-popup-message="#popupMsgForm" data-dev action="#" method="post">
+				<div class="form-popup-tender__items">
+					<div class="form__item">
+						<input autocomplete="off" type="text" name="form[]" placeholder="Ваше ім’я" class="input" required>
+					</div>
+					<div class="form__item">
+						<input autocomplete="off" type="text" name="form[]" placeholder="Компанія" class="input" required>
+					</div>
+					<div class="form__item">
+						<input autocomplete="off" type="tel" name="form[]" placeholder="Номер телефону" class="input" required>
+					</div>
+					<div class="form__item">
+						<input autocomplete="off" type="email" name="form[]" placeholder="Ваша пошта" class="input" required>
+					</div>
+				</div>
+				<div class="form__item">
+					<input autocomplete="off" type="text" name="form[]" placeholder="Напрям (SMM, Influence, Digital, відеопродакшн тощо)" class="input" required>
+				</div>
+				<div class="form__item">
+					<input autocomplete="off" type="text" name="form[]" placeholder="Кілька слів про проєкт" class="input" required>
+				</div>
+				<div class="form-popup-tender__items">
+					<div class="form__item file-input">
+						 	<label class="file-input__label">
+						    <input autocomplete="off" type="file" name="form[]" class="input-file input" />
+								<div class="file-input__txts">
+									<span class="file-input__txt">Прикріпити файл</span>
+									<span class="input-file-att"></span>
+									<button type="button" class="file-input__remove" aria-label="Видалити файл"></button>
+								</div>
+						  </label>
+					</div>
+					<div class="form__item">
+						<input autocomplete="off" type="url" name="form[]" placeholder="або посилання" class="input">
+					</div>
+				</div>
+				<div class="form__btn">
+					<button type="submit" class="form__submit btn btn--red">
+						<span class="btn__txt">Надіслати</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div id="popupMsgForm" class="popup popup-msg">
+	<div class="popup__wrapper popup-msg__wrapper">
+		<div class="popup__content popup-msg__content">
+			<button data-close type="button" class="popup__close" aria-label="close modal">
+			</button>
+			<div class="msg__block">
+				<img class="msg__img" src="@img/icons/check.svg" width="60" height="60" alt="Image">
+				<p class="msg__title">
+					Дякуємо!
+				</p>
+				<p class="msg__txt">
+					Ми зв’яжемося з Вами<br> найближчим часом
+				</p>
 			</div>
 		</div>
 	</div>

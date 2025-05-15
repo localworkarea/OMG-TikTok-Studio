@@ -233,11 +233,11 @@ export function formSubmit() {
 		// Очищуємо форму
 		formValidate.formClean(form);
 		// Повідомляємо до консолі
-		formLogging(`Форму відправлено!`);
+		// formLogging(`Форму відправлено!`);
 	}
-	function formLogging(message) {
-		FLS(`[Форми]: ${message}`);
-	}
+	// function formLogging(message) {
+	// 	FLS(`[Форми]: ${message}`);
+	// }
 }
 /* Модуль форми "кількість" */
 export function formQuantity() {

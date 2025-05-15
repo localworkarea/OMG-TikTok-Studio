@@ -13,11 +13,21 @@
   }
 }
 
+.main {
+  // @media (min-width:$mobileSmall){
+  //    padding-top: toRem(115); 
+  // }
+  // @media (max-width:$mobileSmall){
+  //    padding-top: toRem(90); 
+  // }
+}
+
 .btn {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: toRem(16);
   font-weight: 700;
   border-radius: toRem(150);
@@ -90,9 +100,56 @@
 	}
 }
 
+%fontWeight800 {
+  font-weight: 800;
+}
+%fontWeight700 {
+  font-weight: 700;
+}
+%fontWeight500 {
+  font-weight: 500;
+}
+%fontWeight400 {
+  font-weight: 400;
+}
+
+.title-big {
+  @extend %fontWeight800;
+  line-height: 1.07;
+  @include adaptiveValue("font-size", 56, 36,0,1440.98,480.98);
+}
+.title-big-av {
+  @extend %fontWeight800;
+  @include adaptiveValue("font-size", 46, 28,0,1440.98,480.98);
+}
+.title-av {
+  @extend %fontWeight800;
+  line-height: 1.2;
+  @include adaptiveValue("font-size", 38, 28,0,1440.98,480.98);
+}
+.title-sm {
+  @extend %fontWeight800;
+  @include adaptiveValue("font-size", 26, 22,0,1440.98,480.98);
+}
+
+.tx-big {
+  @extend %fontWeight500;
+  line-height: 1.2;
+  @include adaptiveValue("font-size", 22, 18,0,1440.98,480.98);
+
+}
 
 %transitionColor {
   transition: color .3s ease;
+}
+
+
+%avPB-140-100 {
+  @include adaptiveValue("padding-bottom", 140, 100,0,1440.98,480.98);
+}
+
+%avGap-20-15 {
+  @include adaptiveValue("gap", 20, 15,0,1440.98,480.98);
 }
 
 // Ограничение по выводу строк через максимальное кол-во ===================
@@ -105,3 +162,105 @@
   text-overflow: ellipsis;
   white-space: normal;
 }
+
+
+// Сніппет (HTML): ibga (a з зображенням та класами)
+%ibg {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	// &--top {
+	// 	object-position: top;
+	// }
+	// &--bottom {
+	// 	object-position: bottom;
+	// }
+	// &--left {
+	// 	object-position: left;
+	// }
+	// &--right {
+	// 	object-position: right;
+	// }
+	// &--contain {
+	// 	object-fit: contain;
+	// }
+}
+
+// // Лічильник для списку
+// %listCounter {
+// 	list-style-type: none;
+// 	counter-reset: item;
+// 	li {
+// 		position: relative;
+// 		&:before {
+// 			counter-increment: item;
+// 			content: counter(item);
+// 			position: absolute;
+// 			left: 0;
+// 			top: 0;
+// 		}
+// 	}
+// }
+// // Адаптивне відео
+// %responsiveVideo {
+// 	position: relative;
+// 	overflow: hidden;
+// 	height: 0;
+// 	padding-bottom: 56.25%;
+// 	video,
+// 	iframe,
+// 	object,
+// 	embed {
+// 		position: absolute;
+// 		top: 0;
+// 		left: 0;
+// 		width: 100%;
+// 		height: 100%;
+// 	}
+// }
+// // Відео як фон
+// %videoBackground {
+// 	video,
+// 	iframe,
+// 	object,
+// 	embed {
+// 		position: fixed;
+// 		top: 50%;
+// 		left: 50%;
+// 		min-width: 100%;
+// 		min-height: 100%;
+// 		width: auto;
+// 		height: auto;
+// 		z-index: -100;
+// 		transform: translateX(-50%) translateY(-50%);
+// 		background-size: cover;
+// 	}
+// }
+// // Сірий фільтр
+// %grayfilter {
+// 	transition: all 0.3s ease 0s;
+// 	filter: grayscale(1);
+// 	@media (any-hover: hover) {
+// 		&:hover {
+// 			filter: grayscale(0);
+// 		}
+// 	}
+// }
+// // Скасувати виділення
+// %noselect {
+// 	user-select: none;
+// }
+// // Дзеркальне відображення
+// %mirror {
+// 	transform: scale(-1, 1);
+// }
+// // Плавний скролл
+// %smoothscroll {
+// 	-webkit-overflow-scrolling: touch;
+// }
+// // Сховати скролл
+// %hidescroll {
+// 	&::-webkit-scrollbar {
+// 		display: none;
+// 	}
+// }

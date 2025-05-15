@@ -1,0 +1,108 @@
+.hero {
+  @extend %avPB-140-100;
+   @media (min-width:$mobileSmall){
+     padding-top: toRem(115); 
+  }
+  @media (max-width:$mobileSmall){
+     padding-top: toRem(90); 
+  }
+  position: relative;
+  &::before {
+    content:'';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    @media (min-width:$mobileSmall){
+      background-image: url('@img/bg/bg-hero.svg');
+      background-size: toRem(1959) toRem(995);
+    }
+    @media (max-width:$mobileSmall){
+      background-image: url('@img/bg/bg-hero-mb.svg');
+      background-size: toRem(953) toRem(1106);
+    }
+  }
+  // .hero__container
+  &__container {
+    position: relative;
+    z-index: 1;
+      text-align: center;
+      @media (min-width:$mobileSmall){
+        padding-top: toRem(105);
+      }
+      @media (max-width:$mobileSmall){
+        padding-top: toRem(115);
+      }
+		}
+		// .hero__title
+		&__title {
+      max-width: toRem(630);
+      margin-inline: auto;
+      &:not(:last-child) {
+        @include adaptiveValue("margin-bottom", 28, 15,0,1440.98,480.98);
+      }
+		}
+		// .hero__subtitle
+		&__subtitle {
+      max-width: toRem(413);
+      margin-inline: auto;
+      &:not(:last-child) {
+        @include adaptiveValue("margin-bottom", 35, 30,0,1440.98,480.98);
+      }
+		}
+		// .hero__btns
+		&__btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      @extend %avGap-20-15;
+		}
+		// .hero__btn
+		&__btn {
+      @media (min-width:$mobileSmall){
+        max-width: toRem(216);
+      }
+		}
+}
+
+.emoji {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+		// .emoji__item
+		&__item {
+      font-size: 50px;
+      background-image: url('@img/icons/union.svg');
+	    background-repeat: no-repeat;
+	    background-position: center;
+	    background-size: contain;
+      aspect-ratio: 76/78;
+      max-width: toRem(76);
+      display: grid;
+      place-items: center;
+      &--1 {
+        @include adaptiveValue("max-width", 76, 64,0,1440.98,480.98);
+        @include adaptiveValue("font-size", 48, 42,0,1440.98,480.98);
+      }
+      &--2 {
+
+      }
+      &--3 {
+
+      }
+      &--4 {
+
+      }
+      &--5 {
+
+      }
+      &--6 {
+
+      }
+      &--7 {
+
+      }
+		}
+}

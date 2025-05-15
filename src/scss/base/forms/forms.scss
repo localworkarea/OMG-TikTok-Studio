@@ -1,20 +1,175 @@
-//<FORM>
-// Сніппет (HTML):
-.form {
-	&__row {
+//<INPUT>
+// Сніппет (HTML): inp
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+%input {
+	border-radius: toRem(40);
+	width: 100%;
+	display: block;
+	padding-inline: toRem(20);
+	border: toRem(2) solid transparent;
+	caret-color: inherit;
+	min-height: toRem(60);
+	background-color: #fff;
+	outline: #000;
+	transition: border-color .3s ease;
+	&._form-focus {
+		border-color: #000;
 	}
-	&__column {
+	&:focus-visible {
+		border-color: #000;
 	}
-	&__line {
+	&._form-error {
 	}
-	&__input {
-	}
-	&__button {
-	}
-	&__error {
+	@media (max-width: toEm(375.98)){
+		font-size: toRem(16);
+		padding-inline: toRem(10);
 	}
 }
-//</FORM>
+.input {
+	@extend %input;
+}
+.input[placeholder]:not([data-placeholder-nohiden]) {
+	&::placeholder {
+		color: rgba(0, 0, 0, 0.5);
+		transition: opacity 0.3s;
+	}
+	&:focus::placeholder {
+		opacity: 0;
+	}
+}
+
+textarea.input {
+	resize: none;
+	padding: 0px 0px;
+}
+
+
+.form {
+		// .form__item
+		&__item {
+		}
+		// .form__btn
+		&__btn {
+		}
+		// .form__submit
+		&__submit {
+		}
+	}
+	
+.file-input {
+	.input-file {
+		display: none;
+	}
+		// .file-input__label
+		&__label {
+			@extend %input;
+			display: flex;
+			align-items: center;
+			cursor: pointer;
+			position: relative;
+		}
+		// .file-input__txts
+		&__txts {
+			display: flex;
+			align-items: center;
+			gap: toRem(10);
+		
+			
+			&::before {
+				content:'';
+				background-image: url("@img/icons/clip.svg");
+				background-repeat: no-repeat;
+				background-size:contain;
+				background-position: center;
+				width: toRem(10);
+				height: toRem(18);
+			}
+			.input-file-att {
+				 display: inline-block;
+				 white-space: nowrap;
+				 overflow: hidden;
+				 text-overflow: ellipsis;
+				 vertical-align: bottom;
+				 @media (min-width:$mobileSmall){
+					max-width: 180px; 
+				}
+				@include adaptiveValue("max-width", 286, 190,3,480.98,320);
+			}
+		}
+		// .file-input__txt
+		&__txt {
+			color: rgba(0, 0, 0, 0.5);
+			._file-attached & {
+				display: none;
+			}
+		}
+		// .file-input__remove
+		&__remove {
+		  display: none;
+			position: absolute;
+			width: toRem(23);
+			height: toRem(23);
+			border-radius: 50%;
+			background-color: rgba(0, 0, 0, 0.1);
+			place-items: center;
+			transition: background-color .3s ease;
+			
+			background-image: url('@img/icons/cross.svg');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: toRem(15);
+			@media (any-hover: hover){
+				&:hover{
+					background-color: rgba(0, 0, 0, 0.5);
+				}
+			}
+			top: 40%;
+			transform: translateY(-50%);
+			right: toRem(7);
+			._file-attached & {
+				display: grid;
+			}
+		}
+}
+
+// Message block для форм после отправки
+.msg {
+	// .msg__block
+	&__block {
+		text-align: center;
+		line-height: 1.2;
+	}
+		// .popup-msg__img
+		&__img {
+			width: toRem(60);
+			height: auto;
+			&:not(:last-child) {
+				margin-bottom: toRem(20);
+			}
+		}
+		// .popup-msg__title
+		&__title {
+			font-weight: 800;
+			@include adaptiveValue("font-size", 38, 28,0,1440.98,480.98);
+			&:not(:last-child) {
+				margin-bottom: toRem(20);
+			}
+		}
+		// .popup-msg__txt
+		&__txt {
+			font-weight: 700;
+		}
+}
+
+
+
 
 // <BUTTONS>
 // Сніппет (HTML): btn
