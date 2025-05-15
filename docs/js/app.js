@@ -460,6 +460,26 @@
         setupMenuToggle();
         toggleMobilemenuBody();
         mediaQuery992max.addEventListener("change", handleMenuVisibility);
+        const mapContainer = document.querySelector(".footer__map iframe");
+        if ("IntersectionObserver" in window && mapContainer) {
+            const observer = new IntersectionObserver(((entries, obs) => {
+                entries.forEach((entry => {
+                    if (entry.isIntersecting) {
+                        const iframe = entry.target;
+                        const dataSrc = iframe.getAttribute("data-src");
+                        if (dataSrc) {
+                            iframe.setAttribute("src", dataSrc);
+                            iframe.removeAttribute("data-src");
+                            obs.unobserve(iframe);
+                        }
+                    }
+                }));
+            }), {
+                rootMargin: "500px",
+                threshold: 0
+            });
+            observer.observe(mapContainer);
+        } else mapContainer.setAttribute("src", mapContainer.getAttribute("data-src"));
     }));
     window["FLS"] = false;
     headerScroll();

@@ -80,16 +80,16 @@
     @media (min-width:$tablet){
       width: toRem(320);
     }
-    @media (any-hover: hover){
-      &:hover{
-        img {
-          transform: scale(1.1);
-        }
-      }
-    }
-    img {
+    // @media (any-hover: hover){
+    //   &:hover{
+    //     img {
+    //       transform: scale(1.1);
+    //     }
+    //   }
+    // }
+    img, iframe {
       @extend %ibg;
-      transition: transform .65s ease;
+      // transition: transform .65s ease;
     }
   }
 
