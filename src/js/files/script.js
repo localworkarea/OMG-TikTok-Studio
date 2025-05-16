@@ -22,17 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
   function handleMenuVisibility() {
-		// // sublist footer
-		// if (navFooterSublist) { 
-		// 		navFooterSublist.forEach(item => {
-  	// 		const sublist = item.querySelector('.nav-footer__sublist');
-  	// 		if (sublist && !sublist.hidden) {
-  	// 			_slideUp(sublist, 0);
-  	// 			item.classList.remove('_open');
-  	// 		}
-  	// 	});
-		// }
-		// menu__sublist + media
   	if (mediaQuery992max.matches) {
   		menuItemsWithSublist.forEach(item => {
   			const sublist = item.querySelector('.menu__sublist');
@@ -82,24 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
   			});
   		}
   	});
-  	// navFooterSublist.forEach(item => {
-  	// 	const link = item.querySelector('.nav-footer__link');
-  	// 	const sublist = item.querySelector('.nav-footer__sublist');
-
-  	// 	if (link && sublist) {
-  	// 		link.addEventListener('click', e => {
-  	// 				e.preventDefault();
-
-  	// 				if (sublist.hidden) {
-  	// 					_slideDown(sublist, 300);
-  	// 					item.classList.add('_open');
-  	// 				} else {
-  	// 					_slideUp(sublist, 300);
-  	// 					item.classList.remove('_open');
-  	// 				}
-  	// 		});
-  	// 	}
-  	// });
   }
 
   function toggleMobilemenuBody() {
@@ -186,5 +157,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// =======================================
 
+	// == Вычисление длинны/ширины stroke для анимации
+	document.querySelectorAll('.svg-arrow').forEach(svg => {
+		const paths = svg.querySelectorAll('path');
+		paths.forEach(path => {
+			const length = path.getTotalLength();
+			path.style.setProperty('--dasharray', length);
+			path.style.setProperty('--dashoffset', length);
+			path.style.strokeDasharray = length;
+			path.style.strokeDashoffset = length;
+		});
+	});
+	// ====================
+
 
 });
+
+
+
+// Ticker =================================
+
+  const tickers = document.querySelectorAll("[data-ticker]");
+if (tickers.length > 0) {
+  tickers.forEach(ticker => {
+    // Получаем скорость и направление из атрибутов data-ticker-speed и data-ticker-dir
+    const speed = ticker.getAttribute("data-ticker-speed") || 80;
+    const direction = ticker.getAttribute("data-ticker-dir") || "rtl";
+
+    // Берем первый дочерний элемент тикера
+    const firstChild = ticker.firstElementChild;
+    if (firstChild) {
+      // Клонируем первый элемент
+      const clone = firstChild.cloneNode(true);
+
+      // Предзагрузка всех изображений в клонированном элементе
+      const images = clone.querySelectorAll("img");
+      const promises = Array.from(images).map(img => {
+        return new Promise(resolve => {
+          const preloader = new Image();
+          preloader.src = img.src;
+          preloader.onload = resolve;
+          preloader.onerror = resolve; // Разрешаем, даже если возникла ошибка загрузки
+        });
+      });
+
+      // После предзагрузки изображений добавляем клонированный элемент и запускаем анимацию
+      Promise.all(promises).then(() => {
+        ticker.appendChild(clone);
+
+        // Устанавливаем анимацию для всех дочерних элементов тикера
+        Array.from(ticker.children).forEach(child => {
+          const animationName = direction === "rtl" ? "scroll" : "scroll-rev";
+          child.style.animation = `${animationName} ${speed}s linear infinite`;
+        });
+      });
+    }
+  });
+}
+
+// ====================================================
+

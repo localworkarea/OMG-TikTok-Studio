@@ -41,10 +41,11 @@ class MousePRLX {
 			const paralaxMouse = document.querySelectorAll('[data-prlx-mouse]');
 			if (paralaxMouse.length) {
 				this.paralaxMouseInit(paralaxMouse);
-				this.setLogging(`Прокинувся, стежу за об'єктами: (${paralaxMouse.length})`);
-			} else {
-				this.setLogging('Немає жодного обєкта. Сплю...');
-			}
+				// this.setLogging(`Прокинувся, стежу за об'єктами: (${paralaxMouse.length})`);
+			} 
+			// else {
+			// 	this.setLogging('Немає жодного обєкта. Сплю...');
+			// }
 		}
 	}
 	paralaxMouseInit(paralaxMouse) {
@@ -103,9 +104,9 @@ class MousePRLX {
 		});
 	}
 	// Логінг у консоль
-	setLogging(message) {
-		this.config.logging ? FLS(`[PRLX Mouse]: ${message}`) : null;
-	}
+	// setLogging(message) {
+	// 	this.config.logging ? FLS(`[PRLX Mouse]: ${message}`) : null;
+	// }
 }
 // Запускаємо та додаємо в об'єкт модулів
 flsModules.mousePrlx = new MousePRLX({});
