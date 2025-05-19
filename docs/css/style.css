@@ -169,6 +169,7 @@ body {
 .progress__link {
   transition: color .3s ease
 }
+.block-info__body p:not(:last-child),
 .progress__list:not(:last-child) {
   margin-bottom: 1.875rem
 }
@@ -191,6 +192,8 @@ body {
   display: flex;
   align-items: center
 }
+.block-info__video img,
+.block-info__video video,
 .clients__logo img,
 .footer__map iframe,
 .footer__map img {
@@ -199,11 +202,13 @@ body {
   -o-object-fit: cover;
   object-fit: cover
 }
+.block-info__bg,
 .hero__bg,
 .progress__bg {
   width: 100%;
   height: auto
 }
+.block-info__bg,
 .hero__bg,
 .progress__bg {
   position: absolute;
@@ -864,6 +869,59 @@ textarea.input {
   -o-object-fit: contain;
   object-fit: contain
 }
+.block-info__container {
+  display: grid;
+  gap: 1.875rem 4.375rem
+}
+.block-info__media {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative
+}
+.block-info__video {
+  width: 100%;
+  border-radius: 1.875rem;
+  overflow: hidden;
+  position: relative
+}
+.block-info__video img,
+.block-info__video video {
+  border: .125rem solid transparent;
+  border-radius: 1.875rem;
+  position: relative;
+  z-index: 1
+}
+.block-info__video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(130deg,#25f4ee 0,#8a19cc 50%,#ff004f 100%);
+  z-index: 0
+}
+.block-info__video:nth-child(1) {
+  aspect-ratio: 229/305
+}
+.block-info__video:nth-child(2) {
+  position: relative;
+  top: 40%;
+  aspect-ratio: 229/305
+}
+.block-info__video:nth-child(3) {
+  aspect-ratio: 229/212
+}
+.block-info__video:nth-child(4) {
+  position: absolute;
+  top: 55%;
+  left: 42%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  z-index: 2;
+  max-width: 31%;
+  aspect-ratio: 150/130
+}
+.block-info__body {
+  line-height: 1.2
+}
 @media (min-width:30.06125em) {
   .form-popup-tender__items {
     grid-template-columns: 1fr 1fr
@@ -905,6 +963,14 @@ textarea.input {
   .clients__logo {
     margin-inline: .625rem
   }
+  .block-info__bg {
+    width: 48.625rem
+  }
+  .block-info__btn {
+    min-width: 13.5rem;
+    max-width: -webkit-max-content;
+    max-width: max-content
+  }
 }
 @media (min-width:37.56125em) {
   .footer__bottom p {
@@ -913,6 +979,21 @@ textarea.input {
   .footer__bottom {
     font-size: .9375rem;
     padding-bottom: 1.25rem
+  }
+}
+@media (min-width:46.93625em) {
+  .block-info__container {
+    grid-template-columns: 1fr 41%;
+    grid-template-rows: auto 1fr
+  }
+  .block-info__title {
+    text-align: left
+  }
+  .block-info__media {
+    height: -webkit-max-content;
+    height: max-content;
+    grid-row: 1/3;
+    grid-column: 2/3
   }
 }
 @media (min-width:48.06125em) {
@@ -1133,6 +1214,7 @@ textarea.input {
   .tx-big {
     font-size: 1.375rem
   }
+  .block-info,
   .hero,
   .progress {
     padding-bottom: 8.125rem
@@ -1143,10 +1225,14 @@ textarea.input {
   .clients {
     padding-bottom: 5rem
   }
+  .clients {
+    margin-bottom: 8.125rem
+  }
   .clients__title,
   .progress__title {
     margin-bottom: 2.5rem
   }
+  .block-info__media,
   .hero__btns,
   .progress__list {
     gap: 1.25rem
@@ -1411,6 +1497,7 @@ textarea.input {
   .tx-big {
     font-size: 1.125rem
   }
+  .block-info,
   .hero,
   .progress {
     padding-bottom: 6.25rem
@@ -1421,10 +1508,14 @@ textarea.input {
   .clients {
     padding-bottom: 3.75rem
   }
+  .clients {
+    margin-bottom: 6.25rem
+  }
   .clients__title,
   .progress__title {
     margin-bottom: 1.875rem
   }
+  .block-info__media,
   .hero__btns,
   .progress__list {
     gap: .9375rem
@@ -1476,6 +1567,9 @@ textarea.input {
   .clients__logo {
     margin-inline: .5rem
   }
+  .block-info__bg {
+    width: 35.8125rem
+  }
 }
 @media (max-width:23.49875em) {
   .file-input__label,
@@ -1525,6 +1619,7 @@ textarea.input {
   .tx-big {
     font-size: clamp(1.125rem ,.9997447917rem + .4166666667vw ,1.375rem)
   }
+  .block-info,
   .hero,
   .progress {
     padding-bottom: clamp(6.25rem ,5.3105859375rem + 3.125vw ,8.125rem)
@@ -1535,10 +1630,14 @@ textarea.input {
   .clients {
     padding-bottom: clamp(3.75rem ,3.1237239583rem + 2.0833333333vw ,5rem)
   }
+  .clients {
+    margin-bottom: clamp(6.25rem ,5.3105859375rem + 3.125vw ,8.125rem)
+  }
   .clients__title,
   .progress__title {
     margin-bottom: clamp(1.875rem ,1.5618619792rem + 1.0416666667vw ,2.5rem)
   }
+  .block-info__media,
   .hero__btns,
   .progress__list {
     gap: clamp(.9375rem ,.7809309896rem + .5208333333vw ,1.25rem)
@@ -1603,6 +1702,11 @@ textarea.input {
   .footer__block--map {
     grid-column: 1/3;
     grid-row: 2/3
+  }
+}
+@media (max-width:62.06125em)and (min-width:46.93625em) {
+  .block-info__media {
+    align-self: center
   }
 }
 @media (any-hover:hover) {

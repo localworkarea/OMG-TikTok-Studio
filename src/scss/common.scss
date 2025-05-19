@@ -70,6 +70,9 @@
 }
 
 // Padding ===========
+%avPT-130-100 {
+  @include adaptiveValue("padding-top", 130, 100,0,1440.98,480.98);
+}
 %avPB-130-100 {
   @include adaptiveValue("padding-bottom", 130, 100,0,1440.98,480.98);
 }
@@ -83,6 +86,10 @@
 
 
 // Margin ===================
+%avMB-130-100 {
+  @include adaptiveValue("margin-bottom", 130, 100,0,1440.98,480.98);
+}
+
 %avMB-40-30 {
   @include adaptiveValue("margin-bottom", 40, 30,0,1440.98,480.98);
 }

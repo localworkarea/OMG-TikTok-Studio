@@ -328,6 +328,8 @@
 .clients {
   @extend %avPT-80-60;
   @extend %avPB-80-60;
+  @extend %avMB-130-100;
+  
   background-color: $green-light;
 		// .clients__container
 		&__container {
@@ -393,7 +395,107 @@
 }
 
 
-// SECTION  ==============================================================
+// BLOCK INFO  ==============================================================
+.block-info {
+  @extend %avPB-130-100 ;
+		// .block-info__container
+		&__container {
+      display: grid;
+      gap: toRem(30) toRem(70);
+      @media (min-width:toEm(750.98)){
+        grid-template-columns: 1fr 41%;
+        grid-template-rows: auto 1fr;
+      }
+		}
+		// .block-info__title
+		&__title {
+      @media (min-width:toEm(750.98)){
+        text-align: left;
+      }
+		}
+		// .block-info__media
+		&__media {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      @extend %avGap-20-15;
+      @media (min-width:toEm(750.98)){
+        height: max-content;
+        grid-row: 1/3;
+        grid-column: 2/3;
+      }
+      @media (max-width:$tablet) and (min-width: toEm(750.98)) {
+        align-self: center;
+      }
+		}
+		// .block-info__video
+		&__video {
+      width: 100%;
+      border-radius: toRem(30);
+      overflow: hidden;
+      position: relative;
+      video,img {
+        @extend %ibg;
+        border: toRem(2) solid transparent;
+        border-radius: toRem(30);
+        position: relative;
+        z-index: 1;
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(130deg, rgba(37, 244, 238, 1) 0%, rgba(138, 25, 204, 1) 50%, rgba(255, 0, 79, 1) 100%);
+        z-index: 0;
+      }
+      &:nth-child(1) {
+        aspect-ratio: 229/305;
+      }
+      &:nth-child(2) {
+        position: relative;
+        top: 40%;
+        aspect-ratio: 229/305;
+      }
+      &:nth-child(3) {
+        aspect-ratio: 229/212;
+      }
+      &:nth-child(4) {
+        position: absolute;
+        top: 55%;
+        left: 42%;
+        transform: translate(-50%,-50%);
+        z-index: 2;
+        max-width: 31%;
+        aspect-ratio: 150/130;
+      }
+		}
+		// .block-info__bg
+		&__bg {
+      @extend %img;
+      @extend %imgBg;
+      @media (min-width:$mobileSmall){
+        width: toRem(778); 
+      }
+      @media (max-width:$mobileSmall){
+        width: toRem(573); 
+      }
+		}
+		// .block-info__body
+		&__body {
+      line-height: 1.2;
+      p {
+        @extend %mb30;
+      }
+		}
+		// .block-info__btn
+		&__btn {
+      @media (min-width:$mobileSmall){
+        min-width: toRem(216);
+        max-width: max-content;
+      }
+		}
+}
+
 // SECTION  ==============================================================
 // SECTION  ==============================================================
 // SECTION  ==============================================================

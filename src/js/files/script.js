@@ -100,32 +100,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-	// Отложенная загрузка iframe Google map Footer ==============================
- const mapContainer = document.querySelector(".footer__map iframe");
+	// Lazy Load для iframe, video, img... ==============================
 
-  if ("IntersectionObserver" in window && mapContainer) {
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const iframe = entry.target;
-          const dataSrc = iframe.getAttribute("data-src");
-          if (dataSrc) {
-            iframe.setAttribute("src", dataSrc);
-            iframe.removeAttribute("data-src");
-            obs.unobserve(iframe);
-          }
-        }
-      });
-    }, {
-      rootMargin: "500px", // можно увеличить для подгрузки заранее
-      threshold: 0
-    });
+	const lazyElements = document.querySelectorAll("[data-lazy]");
 
-    observer.observe(mapContainer);
-  } else {
-    // если IntersectionObserver не поддерживается
-    mapContainer.setAttribute("src", mapContainer.getAttribute("data-src"));
-  }
+	if (!("IntersectionObserver" in window)) {
+	  lazyElements.forEach(el => loadLazyElement(el));
+	  return;
+	}
+
+	const observerMap = new Map();
+
+	lazyElements.forEach(originalEl => {
+	  const el = originalEl.tagName === "SOURCE" ? originalEl.parentElement : originalEl;
+
+	  const marginValue = originalEl.getAttribute("data-lazy") || "200";
+	  const rootMargin = `${marginValue}px`;
+
+	  if (!observerMap.has(rootMargin)) {
+	    const observer = new IntersectionObserver((entries, obs) => {
+	      entries.forEach(entry => {
+	        if (entry.isIntersecting) {
+	          loadLazyElement(entry.target);
+	          obs.unobserve(entry.target);
+	        }
+	      });
+	    }, {
+	      rootMargin,
+	      threshold: 0,
+	    });
+
+	    observerMap.set(rootMargin, observer);
+	  }
+
+	  observerMap.get(rootMargin).observe(el);
+	});
+
+	function loadLazyElement(el) {
+	  if (!el) return;
+
+	  if (el.hasAttribute("data-src")) {
+	    el.setAttribute("src", el.getAttribute("data-src"));
+	    el.removeAttribute("data-src");
+	    el.removeAttribute("data-lazy");
+	    return;
+	  }
+
+	  const sources = el.querySelectorAll("source[data-src]");
+	  if (sources.length > 0) {
+	    sources.forEach(source => {
+	      source.setAttribute("src", source.getAttribute("data-src"));
+	      source.removeAttribute("data-src");
+	      source.removeAttribute("data-lazy");
+	    });
+
+	    el.load();
+
+	    el.play?.().catch(() => {});
+	  }
+
+	  if (el.hasAttribute("data-lazy")) {
+	    el.removeAttribute("data-lazy");
+	  }
+	}
+
+
 	// ==============================================
 
 	// File choose from device (Form) ===============================

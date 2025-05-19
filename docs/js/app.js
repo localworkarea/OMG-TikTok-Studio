@@ -634,7 +634,6 @@
             return configWatcher;
         }
         scrollWatcherCreate(configWatcher) {
-            console.log(configWatcher);
             this.observer = new IntersectionObserver(((entries, observer) => {
                 entries.forEach((entry => {
                     this.scrollWatcherCallback(entry, observer);
@@ -766,26 +765,52 @@
         setupMenuToggle();
         toggleMobilemenuBody();
         mediaQuery992max.addEventListener("change", handleMenuVisibility);
-        const mapContainer = document.querySelector(".footer__map iframe");
-        if ("IntersectionObserver" in window && mapContainer) {
-            const observer = new IntersectionObserver(((entries, obs) => {
-                entries.forEach((entry => {
-                    if (entry.isIntersecting) {
-                        const iframe = entry.target;
-                        const dataSrc = iframe.getAttribute("data-src");
-                        if (dataSrc) {
-                            iframe.setAttribute("src", dataSrc);
-                            iframe.removeAttribute("data-src");
-                            obs.unobserve(iframe);
+        const lazyElements = document.querySelectorAll("[data-lazy]");
+        if (!("IntersectionObserver" in window)) {
+            lazyElements.forEach((el => loadLazyElement(el)));
+            return;
+        }
+        const observerMap = new Map;
+        lazyElements.forEach((originalEl => {
+            const el = originalEl.tagName === "SOURCE" ? originalEl.parentElement : originalEl;
+            const marginValue = originalEl.getAttribute("data-lazy") || "200";
+            const rootMargin = `${marginValue}px`;
+            if (!observerMap.has(rootMargin)) {
+                const observer = new IntersectionObserver(((entries, obs) => {
+                    entries.forEach((entry => {
+                        if (entry.isIntersecting) {
+                            loadLazyElement(entry.target);
+                            obs.unobserve(entry.target);
                         }
-                    }
+                    }));
+                }), {
+                    rootMargin,
+                    threshold: 0
+                });
+                observerMap.set(rootMargin, observer);
+            }
+            observerMap.get(rootMargin).observe(el);
+        }));
+        function loadLazyElement(el) {
+            if (!el) return;
+            if (el.hasAttribute("data-src")) {
+                el.setAttribute("src", el.getAttribute("data-src"));
+                el.removeAttribute("data-src");
+                el.removeAttribute("data-lazy");
+                return;
+            }
+            const sources = el.querySelectorAll("source[data-src]");
+            if (sources.length > 0) {
+                sources.forEach((source => {
+                    source.setAttribute("src", source.getAttribute("data-src"));
+                    source.removeAttribute("data-src");
+                    source.removeAttribute("data-lazy");
                 }));
-            }), {
-                rootMargin: "500px",
-                threshold: 0
-            });
-            observer.observe(mapContainer);
-        } else mapContainer.setAttribute("src", mapContainer.getAttribute("data-src"));
+                el.load();
+                el.play?.().catch((() => {}));
+            }
+            if (el.hasAttribute("data-lazy")) el.removeAttribute("data-lazy");
+        }
         const fileInputs = document.querySelectorAll(".input-file");
         fileInputs.forEach((input => {
             const label = input.closest(".file-input__label");
