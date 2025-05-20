@@ -2,6 +2,9 @@
   position: relative;
   z-index: 1;
   @extend %avPB-130-100;
+  h1 {
+     @include adaptiveValue("font-size", 56, 36,0,1440.98,480.98);
+  }
    @media (min-width:$mobileSmall){
      padding-top: toRem(113); 
   }
