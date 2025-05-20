@@ -1,6 +1,29 @@
 (() => {
     "use strict";
     const modules_flsModules = {};
+    let isMobile = {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function() {
+            return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+        }
+    };
+    function addTouchClass() {
+        if (isMobile.any()) document.documentElement.classList.add("touch");
+    }
     function addLoadedClass() {
         if (!document.documentElement.classList.contains("loading")) window.addEventListener("load", (function() {
             setTimeout((function() {
@@ -766,21 +789,26 @@
         toggleMobilemenuBody();
         mediaQuery992max.addEventListener("change", handleMenuVisibility);
         const lazyElements = document.querySelectorAll("[data-lazy]");
-        if (!("IntersectionObserver" in window)) {
-            lazyElements.forEach((el => loadLazyElement(el)));
-            return;
-        }
+        let lazyIdCounter = 0;
         const observerMap = new Map;
         lazyElements.forEach((originalEl => {
+            assignLazyIdIfMissing(originalEl);
             const el = originalEl.tagName === "SOURCE" ? originalEl.parentElement : originalEl;
             const marginValue = originalEl.getAttribute("data-lazy") || "200";
             const rootMargin = `${marginValue}px`;
+            const lazyId = originalEl.getAttribute("data-lazy-id");
+            if (shouldSkipLazyLoad(el, lazyId)) {
+                loadLazyElement(el, lazyId);
+                return;
+            }
             if (!observerMap.has(rootMargin)) {
                 const observer = new IntersectionObserver(((entries, obs) => {
                     entries.forEach((entry => {
                         if (entry.isIntersecting) {
-                            loadLazyElement(entry.target);
-                            obs.unobserve(entry.target);
+                            const targetEl = entry.target;
+                            const targetId = targetEl.getAttribute("data-lazy-id");
+                            loadLazyElement(targetEl, targetId);
+                            obs.unobserve(targetEl);
                         }
                     }));
                 }), {
@@ -791,8 +819,17 @@
             }
             observerMap.get(rootMargin).observe(el);
         }));
-        function loadLazyElement(el) {
+        function assignLazyIdIfMissing(el) {
+            if (!el.hasAttribute("data-lazy-id")) el.setAttribute("data-lazy-id", `lazy-${lazyIdCounter++}`);
+        }
+        function shouldSkipLazyLoad(el, lazyId) {
+            if (lazyId && sessionStorage.getItem(`lazy-${lazyId}`)) return true;
+            if (el.tagName === "IMG" && el.complete && el.getAttribute("data-src")) return true;
+            return false;
+        }
+        function loadLazyElement(el, lazyId = null) {
             if (!el) return;
+            if (lazyId) sessionStorage.setItem(`lazy-${lazyId}`, "1");
             if (el.hasAttribute("data-src")) {
                 el.setAttribute("src", el.getAttribute("data-src"));
                 el.removeAttribute("data-src");
@@ -806,7 +843,7 @@
                     source.removeAttribute("data-src");
                     source.removeAttribute("data-lazy");
                 }));
-                el.load();
+                el.load?.();
                 el.play?.().catch((() => {}));
             }
             if (el.hasAttribute("data-lazy")) el.removeAttribute("data-lazy");
@@ -843,6 +880,41 @@
                 path.style.strokeDashoffset = length;
             }));
         }));
+        const listEmoji = document.querySelector(".list-emoji__list");
+        if (!listEmoji) return;
+        const itemsEmojji = listEmoji.querySelectorAll(".list-emoji__item");
+        const itemsCount = itemsEmojji.length;
+        if (itemsCount % 2 === 0) {
+            listEmoji.classList.add("_items-even");
+            const lastItem = itemsEmojji[itemsCount - 1];
+            lastItem.classList.add("_even-last");
+        }
+        const articlesCases = document.querySelectorAll(".article-cases");
+        if (articlesCases.length > 0) {
+            articlesCases.forEach((article => {
+                article.addEventListener("mouseenter", (() => {
+                    article.classList.add("_open");
+                }));
+                article.addEventListener("mouseleave", (() => {
+                    article.classList.remove("_open");
+                }));
+                article.addEventListener("click", (e => {
+                    if (e.target.closest("a")) return;
+                    closeAllArticlesExcept(article);
+                    article.classList.toggle("_open");
+                }));
+            }));
+            function closeAllArticlesExcept(current) {
+                articlesCases.forEach((article => {
+                    if (article !== current) article.classList.remove("_open");
+                }));
+            }
+            document.addEventListener("click", (e => {
+                articlesCases.forEach((article => {
+                    if (!article.contains(e.target)) article.classList.remove("_open");
+                }));
+            }));
+        }
     }));
     const tickers = document.querySelectorAll("[data-ticker]");
     if (tickers.length > 0) tickers.forEach((ticker => {
@@ -868,6 +940,7 @@
         }
     }));
     window["FLS"] = false;
+    addTouchClass();
     addLoadedClass();
     formSubmit();
     headerScroll();

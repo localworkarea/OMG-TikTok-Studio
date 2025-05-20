@@ -102,27 +102,112 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Lazy Load для iframe, video, img... ==============================
 
-	const lazyElements = document.querySelectorAll("[data-lazy]");
+	// const lazyElements = document.querySelectorAll("[data-lazy]");
 
-	if (!("IntersectionObserver" in window)) {
-	  lazyElements.forEach(el => loadLazyElement(el));
-	  return;
-	}
+	// if (!("IntersectionObserver" in window)) {
+	//   lazyElements.forEach(el => loadLazyElement(el));
+	//   return;
+	// }
+
+	// const observerMap = new Map();
+
+	// lazyElements.forEach(originalEl => {
+	//   const el = originalEl.tagName === "SOURCE" ? originalEl.parentElement : originalEl;
+
+	//   const marginValue = originalEl.getAttribute("data-lazy") || "200";
+	//   const rootMargin = `${marginValue}px`;
+
+	//   if (!observerMap.has(rootMargin)) {
+	//     const observer = new IntersectionObserver((entries, obs) => {
+	//       entries.forEach(entry => {
+	//         if (entry.isIntersecting) {
+	//           loadLazyElement(entry.target);
+	//           obs.unobserve(entry.target);
+	//         }
+	//       });
+	//     }, {
+	//       rootMargin,
+	//       threshold: 0,
+	//     });
+
+	//     observerMap.set(rootMargin, observer);
+	//   }
+
+	//   observerMap.get(rootMargin).observe(el);
+	// });
+
+	// function loadLazyElement(el) {
+	//   if (!el) return;
+
+	//   if (el.hasAttribute("data-src")) {
+	//     el.setAttribute("src", el.getAttribute("data-src"));
+	//     el.removeAttribute("data-src");
+	//     el.removeAttribute("data-lazy");
+	//     return;
+	//   }
+
+	//   const sources = el.querySelectorAll("source[data-src]");
+	//   if (sources.length > 0) {
+	//     sources.forEach(source => {
+	//       source.setAttribute("src", source.getAttribute("data-src"));
+	//       source.removeAttribute("data-src");
+	//       source.removeAttribute("data-lazy");
+	//     });
+
+	//     el.load();
+
+	//     el.play?.().catch(() => {});
+	//   }
+
+	//   if (el.hasAttribute("data-lazy")) {
+	//     el.removeAttribute("data-lazy");
+	//   }
+	// }
+
+
+
+	// Учитывает уже загруженные элементы, добавляет data-lazy-id чтобы учитывать уже кешированные элементы, 
+	// 
+	const lazyElements = document.querySelectorAll("[data-lazy]");
+	let lazyIdCounter = 0;
+
+	// Префетч при хорошем соединении, проверяем  ПК или мобилка и поддерживается ли navigator
+	// const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+	// const isFastConnection = conn?.effectiveType === "4g";
+	// const noObserver = !("IntersectionObserver" in window);
+	// const isProbablyDesktop = window.innerWidth > 1024 || !conn;
+
+	// if (noObserver || isFastConnection || isProbablyDesktop) {
+	//   lazyElements.forEach(el => {
+	//     assignLazyIdIfMissing(el);
+	//     maybeLoadImmediately(el);
+	//   });
+	//   return;
+	// }
 
 	const observerMap = new Map();
 
 	lazyElements.forEach(originalEl => {
-	  const el = originalEl.tagName === "SOURCE" ? originalEl.parentElement : originalEl;
+	  assignLazyIdIfMissing(originalEl);
 
+	  const el = originalEl.tagName === "SOURCE" ? originalEl.parentElement : originalEl;
 	  const marginValue = originalEl.getAttribute("data-lazy") || "200";
 	  const rootMargin = `${marginValue}px`;
+	  const lazyId = originalEl.getAttribute("data-lazy-id");
+
+	  if (shouldSkipLazyLoad(el, lazyId)) {
+	    loadLazyElement(el, lazyId);
+	    return;
+	  }
 
 	  if (!observerMap.has(rootMargin)) {
 	    const observer = new IntersectionObserver((entries, obs) => {
 	      entries.forEach(entry => {
 	        if (entry.isIntersecting) {
-	          loadLazyElement(entry.target);
-	          obs.unobserve(entry.target);
+	          const targetEl = entry.target;
+	          const targetId = targetEl.getAttribute("data-lazy-id");
+	          loadLazyElement(targetEl, targetId);
+	          obs.unobserve(targetEl);
 	        }
 	      });
 	    }, {
@@ -136,8 +221,39 @@ document.addEventListener("DOMContentLoaded", () => {
 	  observerMap.get(rootMargin).observe(el);
 	});
 
-	function loadLazyElement(el) {
+	// --- Helpers ---
+
+	function assignLazyIdIfMissing(el) {
+	  if (!el.hasAttribute("data-lazy-id")) {
+	    el.setAttribute("data-lazy-id", `lazy-${lazyIdCounter++}`);
+	  }
+	}
+
+	function maybeLoadImmediately(el) {
+	  const lazyId = el.getAttribute("data-lazy-id");
+	  if (shouldSkipLazyLoad(el, lazyId)) {
+	    loadLazyElement(el, lazyId);
+	  }
+	}
+
+	function shouldSkipLazyLoad(el, lazyId) {
+	  if (lazyId && sessionStorage.getItem(`lazy-${lazyId}`)) {
+	    return true;
+	  }
+
+	  if (el.tagName === "IMG" && el.complete && el.getAttribute("data-src")) {
+	    return true;
+	  }
+
+	  return false;
+	}
+
+	function loadLazyElement(el, lazyId = null) {
 	  if (!el) return;
+
+	  if (lazyId) {
+	    sessionStorage.setItem(`lazy-${lazyId}`, "1");
+	  }
 
 	  if (el.hasAttribute("data-src")) {
 	    el.setAttribute("src", el.getAttribute("data-src"));
@@ -154,8 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	      source.removeAttribute("data-lazy");
 	    });
 
-	    el.load();
-
+	    el.load?.();
 	    el.play?.().catch(() => {});
 	  }
 
@@ -163,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	    el.removeAttribute("data-lazy");
 	  }
 	}
+
 
 
 	// ==============================================
@@ -208,6 +324,66 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 	// ====================
+
+
+	// == Подсчет четного количества элементов, если четное то выводим класс _items-even =
+	const listEmoji = document.querySelector(".list-emoji__list");
+	if (!listEmoji) return;
+
+	const itemsEmojji = listEmoji.querySelectorAll(".list-emoji__item");
+	const itemsCount = itemsEmojji.length;
+
+	// Если общее количество чётное — добавляем класс списку
+	if (itemsCount % 2 === 0) {
+	  listEmoji.classList.add("_items-even");
+
+	  // И отдельно отмечаем последний элемент как чётный
+	  const lastItem = itemsEmojji[itemsCount - 1];
+	  lastItem.classList.add("_even-last");
+	}
+	// =======================
+
+
+	// Открытие/закрытие контента карточек 	.article-cases ==================
+	const articlesCases = document.querySelectorAll('.article-cases');
+	if (articlesCases.length > 0) {
+		articlesCases.forEach(article => {
+			// Hover
+			article.addEventListener('mouseenter', () => {
+				article.classList.add('_open');
+			});
+			article.addEventListener('mouseleave', () => {
+				article.classList.remove('_open');
+			});
+	
+			// Click — toggle _open
+			article.addEventListener('click', (e) => {
+				if (e.target.closest('a')) return;
+				// e.stopPropagation(); // предотвращаем всплытие до document
+				closeAllArticlesExcept(article);
+				article.classList.toggle('_open');
+			});
+		});
+	
+		// Закрываем все открытые статьи, кроме переданной
+		function closeAllArticlesExcept(current) {
+			articlesCases.forEach(article => {
+				if (article !== current) {
+					article.classList.remove('_open');
+				}
+			});
+		}
+	
+		// Глобальный клик — закрываем, если клик вне article
+		document.addEventListener('click', (e) => {
+			articlesCases.forEach(article => {
+				if (!article.contains(e.target)) {
+					article.classList.remove('_open');
+				}
+			});
+		});
+	}
+	// ==============================================================
 
 
 });

@@ -109,6 +109,14 @@
 %avGap-20-15 {
   @include adaptiveValue("gap", 20, 15,0,1440.98,480.98);
 }
+%avGap-30-15 {
+  @include adaptiveValue("gap", 30, 15,0,1440.98,480.98);
+}
+
+// Border-radius ================
+%avBorRad-40-30 {
+  @include adaptiveValue("border-radius", 40, 30,0,1440.98,480.98);
+}
 
 
 %linear-gradient-blue {
@@ -299,7 +307,14 @@
     }
     @media (any-hover: hover){
       &:hover{
-        border-color: #fff;
+        border-color: #000;
+      }
+    }
+  }
+  &--red-bl {
+    @media (any-hover: hover){
+      &:hover{
+        border-color: $red;
       }
     }
   }
