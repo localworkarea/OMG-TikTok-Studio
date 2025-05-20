@@ -372,7 +372,7 @@ body::after {
   bottom: 0;
   right: 0;
   padding: 20px;
-  transition: visibility .65s ease 0s;
+  transition: visibility .65s ease 0s,opacity .65s ease 0s;
   visibility: hidden;
   pointer-events: none;
   z-index: 150
@@ -380,6 +380,7 @@ body::after {
 .popup.popup_show {
   visibility: visible;
   overflow: auto;
+  opacity: 1!important;
   pointer-events: auto
 }
 .popup__wrapper {

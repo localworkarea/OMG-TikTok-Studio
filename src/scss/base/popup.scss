@@ -22,13 +22,14 @@ body::after {
 	bottom: 0;
 	right: 0;
 	padding: 20px;
-	transition: visibility 0.65s ease 0s;
+	transition: visibility 0.65s ease 0s, opacity .65s ease 0s;
 	visibility: hidden;
 	pointer-events: none;
 	z-index: 150;
 	&.popup_show {
 		visibility: visible;
 		overflow: auto;
+		opacity: 1 !important;
 		pointer-events: auto;
 	}
 }
