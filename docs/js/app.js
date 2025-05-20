@@ -916,6 +916,34 @@
             }));
         }
     }));
+    const videoElements = document.querySelectorAll("video");
+    if (videoElements.length > 0) {
+        Object.defineProperty(HTMLMediaElement.prototype, "playing", {
+            get: function() {
+                return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+            }
+        });
+        videoElements.forEach((videoElement => {
+            if (!videoElement.hasAttribute("playsinline")) videoElement.setAttribute("playsinline", "");
+        }));
+        function attemptPlay(videoElement) {
+            if (!videoElement.playing && videoElement.hasAttribute("autoplay")) videoElement.play().catch((error => {
+                console.warn("Failed to play video:", error);
+            }));
+        }
+        document.body.addEventListener("click", (() => {
+            videoElements.forEach((videoElement => attemptPlay(videoElement)));
+        }));
+        document.body.addEventListener("touchstart", (() => {
+            videoElements.forEach((videoElement => attemptPlay(videoElement)));
+        }));
+        window.addEventListener("focus", (() => {
+            videoElements.forEach((videoElement => attemptPlay(videoElement)));
+        }));
+        document.addEventListener("visibilitychange", (() => {
+            if (document.visibilityState === "visible") videoElements.forEach((videoElement => attemptPlay(videoElement)));
+        }));
+    }
     const tickers = document.querySelectorAll("[data-ticker]");
     if (tickers.length > 0) tickers.forEach((ticker => {
         const speed = ticker.getAttribute("data-ticker-speed") || 80;

@@ -171,20 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	const lazyElements = document.querySelectorAll("[data-lazy]");
 	let lazyIdCounter = 0;
 
-	// Префетч при хорошем соединении, проверяем  ПК или мобилка и поддерживается ли navigator
-	// const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-	// const isFastConnection = conn?.effectiveType === "4g";
-	// const noObserver = !("IntersectionObserver" in window);
-	// const isProbablyDesktop = window.innerWidth > 1024 || !conn;
-
-	// if (noObserver || isFastConnection || isProbablyDesktop) {
-	//   lazyElements.forEach(el => {
-	//     assignLazyIdIfMissing(el);
-	//     maybeLoadImmediately(el);
-	//   });
-	//   return;
-	// }
-
 	const observerMap = new Map();
 
 	lazyElements.forEach(originalEl => {
@@ -388,6 +374,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+const videoElements = document.querySelectorAll('video');
+
+if (videoElements.length > 0) {
+
+  // Добавляем геттер "playing" ко всем HTMLMediaElement
+  Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+    get: function () {
+      return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+    }
+  });
+
+  // Убедимся, что у всех видео есть playsinline
+  videoElements.forEach(videoElement => {
+    if (!videoElement.hasAttribute('playsinline')) {
+      videoElement.setAttribute('playsinline', '');
+    }
+  });
+
+  // Функция безопасного воспроизведения
+  function attemptPlay(videoElement) {
+    if (!videoElement.playing && videoElement.hasAttribute('autoplay')) {
+      videoElement.play().catch(error => {
+        console.warn('Failed to play video:', error);
+      });
+    }
+  }
+
+  // Пользовательские события
+  document.body.addEventListener('click', () => {
+    videoElements.forEach(videoElement => attemptPlay(videoElement));
+  });
+
+  document.body.addEventListener('touchstart', () => {
+    videoElements.forEach(videoElement => attemptPlay(videoElement));
+  });
+
+  // Фокус окна
+  window.addEventListener('focus', () => {
+    videoElements.forEach(videoElement => attemptPlay(videoElement));
+  });
+
+  // Возврат вкладки в активное состояние
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      videoElements.forEach(videoElement => attemptPlay(videoElement));
+    }
+  });
+}
 
 
 // Ticker =================================
