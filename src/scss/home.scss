@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   z-index: 1;
-  @extend %avPB-130-100;
+  // @extend %avPB-130-100;
   // h1 {
   //    @include adaptiveValue("font-size", 56, 36,0,1440.98,480.98);
   // }
@@ -266,7 +266,7 @@
 .progress {
     position: relative;
     z-index: 0;
-    @extend %avPB-130-100;
+    // @extend %avPB-130-100;
 		// .progress__container
 		&__container {
 		}
@@ -354,9 +354,9 @@
 
 // SECTION PROGRESS ==============================================================
 .clients {
-  @extend %avPT-80-60;
-  @extend %avPB-80-60;
-  @extend %avMB-130-100;
+  // @extend %avPT-80-60;
+  // @extend %avPB-80-60;
+  // @extend %avMB-130-100;
   
   background-color: $green-light;
 		// .clients__container
@@ -425,7 +425,7 @@
 
 // BLOCK INFO  ==============================================================
 .block-info {
-  @extend %avPB-130-100 ;
+  // @extend %avPB-130-100 ;
 		// .block-info__container
 		&__container {
       display: grid;
@@ -519,28 +519,15 @@
 		}
 		// .block-info__btn
 		&__btn {
-      @media (min-width:$mobileSmall){
-        min-width: toRem(216);
-        max-width: max-content;
-      }
+      @extend %minWidthBtn-216;
 		}
 }
 
-%afterArrow {
-  content:'';
-  background-image: url("../img/icons/arrow.svg");
-  background-repeat: no-repeat;
-  background-size:contain;
-  background-position: center;
-  transform-origin: 50% 50%;
-  transform: rotate(-90deg);
-  width: toRem(14);
-  aspect-ratio: 10/6;
-}
+
 
 // SECTION CARDS LINK ==============================================================
 .cards-link {
-   @extend %avPB-130-100 ;
+  //  @extend %avPB-130-100 ;
 		// .cards-link__container
 		&__container {
 		}
@@ -610,7 +597,7 @@
       justify-content: space-between;
       margin-top: toRem(10);
       opacity: .3;
-      transition: opacity .3s ease;
+     @extend %transitionOpacity;
       @extend %fontWeight700;
       min-height: toRem(25);
       &::after { 
@@ -627,7 +614,7 @@
 
 // SECTION LIST-EMOJI  ==============================================================
 .list-emoji {
-   @extend %avPB-130-100 ;
+  //  @extend %avPB-130-100 ;
 		// .list-emoji__container
 		&__container {
 		}
@@ -899,15 +886,15 @@
 
 // SECTION CASES-HOME ==============================================================
 .cases-home {
-  @extend %avPT-130-100;
-  @extend %avPB-130-100;
   background-color: $green-light;
 		// .cases-home__container
 		&__container {
 		}
 		// .cases-home__title
 		&__title {
-      @extend %avMB-40-30;
+      &:not(:last-child) {
+        @extend %avMB-40-30;
+      }
       @media (min-width:$mobileSmall){
          text-align: left; 
       }
@@ -916,12 +903,23 @@
 		&__body {
       display: grid;
       @extend %avGap-30-15;
+      &:not(:last-child) {
+        @extend %avMB-40-30;
+      }
       @media (min-width:toEm(650.98)){
         grid-template-columns: 1fr 1fr;
       }
 		}
 		// .cases-home__article
 		&__article {
+		}
+		// .cases-home__btn
+		&__btn {
+      @media (min-width:$mobileSmall){
+        margin-inline: auto;
+        min-width: toRem(230);
+        max-width: max-content;
+      }
 		}
 }
 
@@ -997,7 +995,7 @@
     height: 80%;
     overflow: hidden;
     opacity: 0;
-    transition: opacity .3s ease;
+     @extend %transitionOpacity;
 	}
   // .article-cases__info
   &__info {
@@ -1032,7 +1030,7 @@
     padding-top: toRem(10);
     min-height: toRem(25);
     color: #fff;
-    transition: opacity .3s ease;
+    @extend %transitionOpacity;
 
      &::after { 
         @extend %afterArrow;
@@ -1051,6 +1049,8 @@
 	}
 	// .article-cases__media
 	&__media {
+    background-color: $green;
+    aspect-ratio: 565/426;
     video,img {
       @extend %ibg;
       aspect-ratio: 565/426;
@@ -1058,8 +1058,136 @@
 	}
 }
 
+// SECTION SLIDER-BLOCK  ==============================================================
+.slider-block {
+		// .slider-block__container
+		&__container {
+		}
+		// .slider-block__title
+		&__title {
+      @extend %avMB-40-30;
+		}
+		// .slider-block__body
+		&__body {
+      position: relative;
+      &:not(:last-child) {
+        @extend %avMB-40-30;
+      }
+		}
+		// .slider-block__slider
+		&__slider {
+		}
+		// .slider-block__wrapper
+		&__wrapper {
+		}
+		// .slider-block__slide
+		&__slide {
+      @media (min-width:$mobileSmall){
+        padding-inline: toRem(10);
+        padding-block: toRem(20);
+      }
+      @media (max-width:$mobileSmall){
+         padding-inline: toRem(5); 
+      }
+		}
+		// .slider-block__button
+		&__button {
+      @extend %swiperButton;
+		}
+		// .slider-block__btn
+		&__btn {
+      @extend %minWidthBtn-216;
+      margin-inline: auto;
+      box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.05);
+		}
+}
 
-// SECTION  ==============================================================
+.card-item {
+  position: relative;
+  border-radius: toRem(30);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.05);
+  transition: box-shadow .3s ease;
+  @media (any-hover: hover){
+    &:hover{
+      box-shadow: 0 10px 10px 0 rgba(33, 5, 41, 0.16);
+      .card-item__footer {
+        opacity: 1;
+      }
+      .card-item__img {
+        img {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+	// .card-item__img
+	&__img {
+    overflow: hidden;
+    aspect-ratio: 373/250;
+    img {
+      @extend %ibg;
+      aspect-ratio: 373/250;
+      transform-origin: 50% 50%;
+      transition: transform .65s ease;
+    }
+	}
+	// .card-item__body
+	&__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-inline: toRem(30);
+    padding-block: toRem(24);
+    gap: toRem(20);
+	}
+	// .card-item__title
+	&__title {
+    font-size: toRem(22);
+    @extend %fontWeight800;
+	}
+	// .card-item__subtitle
+	&__subtitle {
+    flex: 1;
+    p {
+      line-height: 1.3;
+      @extend %boxElement;
+      -webkit-line-clamp: 4;
+    }
+	}
+	// .card-item__footer
+	&__footer {
+    // flex: 1;
+    @extend %flexCenter;
+    justify-content: space-between;
+    @extend %fontWeight700;
+    color: $red;
+    min-height: toRem(25);
+    opacity: 0;
+    @extend %transitionOpacity;
+    .touch & {
+      opacity: 1;
+    }
+    &::after { 
+      @extend %afterArrow;
+       background-image: url("../img/icons/arrow-red.svg");
+       transform: rotate(0deg);
+       width: toRem(20);
+    }
+	}
+	// .card-item__link
+	&__link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+	}
+}
+
+
+
 // SECTION  ==============================================================
 // SECTION  ==============================================================
 // SECTION  ==============================================================
