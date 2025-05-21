@@ -35,6 +35,7 @@ textarea {
 .input {
 	@extend %input;
 }
+
 .input[placeholder]:not([data-placeholder-nohiden]) {
 	&::placeholder {
 		color: rgba(0, 0, 0, 0.5);
@@ -167,6 +168,75 @@ textarea.input {
 			font-weight: 700;
 		}
 }
+
+
+
+.form-trends {
+		// .form-trends__form
+		&__form {
+		}
+		// .form-trends__item
+		&__item {
+			position: relative;
+			@extend %bgGradient;
+			&:before {
+				border-radius: toRem(40);
+				margin: 2px;
+			}
+			&:after {
+				content:'';
+				position: absolute;
+				z-index: 1;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				width: calc(100% - 4px);
+				height: calc(100% - 4px);
+				background: linear-gradient(180deg, #e6feff 0%, #f5ffff 100%);
+				// @extend %transitionOpacity;
+				border-radius: toRem(40);
+			}
+				border-radius: toRem(40);
+				overflow: hidden;
+				&._form-focus {
+					&::before {
+						margin: 0;
+					}
+				}
+				@media (any-hover: hover){
+					&:hover{
+						&::before {
+							margin: 0;
+						}
+						.input {
+							border-color: transparent;
+						}
+					}
+				}
+			.input {
+				position: relative;
+				z-index: 3;
+				background-color: transparent;
+				border-color: #fff;
+				border-width: toRem(3);
+				text-align: center;
+				@extend %fontWeight700;
+				font-size: toRem(16);
+				&._form-focus {
+					border-color: transparent;
+					// transition-delay: .25s;
+				}
+				&:focus-visible {
+					border-color: transparent;
+					// transition-delay: .25s;
+				}
+			}
+		}
+		// .form-trends__submit
+		&__submit {
+		}
+}
+
 
 
 

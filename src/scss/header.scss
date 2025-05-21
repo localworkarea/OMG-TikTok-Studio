@@ -4,12 +4,15 @@
   top: toRem(30);
   left: 0;
   width: 100%;
-  transition: top .3s ease;
+  transition: top .3s ease, opacity .3s ease;
   &._header-scroll {
     top: toRem(10);
     .header__wrapper {
       box-shadow: 0 4px 50px 0 rgba(33, 5, 41, 0.12), 0 4px 10px 0 rgba(33, 5, 41, 0.06);
     }
+  }
+  .loaded & {
+    opacity: 1 !important;
   }
   @media (max-width:$mobileSmall){
      top: toRem(20); 
@@ -28,6 +31,7 @@
 		&__wrapper {
       position: relative;
       backdrop-filter: blur(30px);
+      // filter: blur(30px);
       background-color: rgba(255, 255, 255, 0.7);
       padding: toRem(10);
       
@@ -37,7 +41,7 @@
       gap: toRem(50);
       transition: box-shadow .3s ease;
       @include adaptiveValue("gap", 50, 10,0,1130.98,992.98);
-      border-radius: toRem(40);
+      // border-radius: toRem(40);
       @media (min-width:$tablet){
         border-radius: toRem(40);
       }
@@ -147,6 +151,7 @@
     padding: toRem(44) toRem(16) toRem(16) toRem(16);
     background-color: #fff;
     border-radius: toRem(20);
+    border-radius: toRem(30);
     box-shadow: 0 4px 40px 0 rgba(33, 5, 41, 0.12), 0 4px 7px 0 rgba(33, 5, 41, 0.06);
     opacity: 0;
     visibility: hidden;
@@ -365,6 +370,7 @@
         height: toRem(2);
         background-color: #000;
         border-radius: toRem(1);
+        will-change: transform, top;
       }
       span {
         width: 67%;

@@ -154,6 +154,16 @@
    background: linear-gradient(135deg, #62fff2 0%, #1eddff 100%);
 }
 
+%bgGradient {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(130deg, rgba(37, 244, 238, 1) 0%, rgba(138, 25, 204, 1) 50%, rgba(255, 0, 79, 1) 100%);
+    z-index: 0;
+  }
+}
+
 .clr-blue {
    color: $blueDark;
 }
@@ -547,3 +557,5 @@
     // pointer-events: none;
   }
 }
+
+

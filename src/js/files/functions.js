@@ -498,6 +498,7 @@ export function showMore() {
 				} else {
 					_slideDown(showMoreContent, 0, hiddenHeight);
 					showMoreButton.hidden = true;
+					showMoreBlock.classList.add("no-more-content");
 				}
 			} else {
 				_slideDown(showMoreContent, 0, hiddenHeight);

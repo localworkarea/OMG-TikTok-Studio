@@ -44,7 +44,7 @@ flsFunctions.addLoadedClass();
 Модуль "Спойлери"
 Сніппет (HTML): spollers
 */
-// flsFunctions.spollers();
+flsFunctions.spollers();
 
 /*
 Модуль "Таби"
@@ -56,7 +56,7 @@ flsFunctions.addLoadedClass();
 Модуль "Показати ще"
 Сніппет (HTML): showmore
 */
-// flsFunctions.showMore();
+flsFunctions.showMore();
 
 /*
 Модуль "До/Після"
@@ -101,10 +101,10 @@ import './libs/parallax-mouse.js'
 import * as flsForms from "./files/forms/forms.js";
 
 /* Робота з полями форми */
-// flsForms.formFieldsInit({
-// 	viewPass: false,
-// 	autoHeight: false
-// });
+flsForms.formFieldsInit({
+	viewPass: false,
+	autoHeight: false
+});
 /* Надсилання форми */
 
 flsForms.formSubmit();

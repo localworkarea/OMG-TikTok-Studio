@@ -58,6 +58,48 @@ function initSliders() {
 			}
 		});
 	}
+	if (document.querySelector('.reviews__slider')) { 
+		new Swiper('.reviews__slider', { 
+			modules: [Navigation],
+			observer: true,
+			observeParents: true,
+			slidesPerView: 1,
+			spaceBetween: 0,
+			//autoHeight: true,
+			speed: 300,
+
+			//touchRatio: 0,
+			//simulateTouch: false,
+			//loop: true,
+			//preloadImages: false,
+			//lazy: true,
+
+
+			navigation: {
+				prevEl: '.reviews__body .swiper-button-prev',
+				nextEl: '.reviews__body .swiper-button-next',
+			},
+			// Брейкпоінти
+			breakpoints: {
+				320: {
+					slidesPerView: 1,
+					spaceBetween: 10,
+				},
+				768: {
+					slidesPerView: 2,
+					spaceBetween: 20,
+				},
+				992: {
+					slidesPerView: 3,
+					spaceBetween: 20,
+				},
+			},
+			// Події
+			on: {
+
+			}
+		});
+	}
 }
 
 
