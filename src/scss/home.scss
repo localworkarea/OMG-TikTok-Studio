@@ -105,6 +105,19 @@
   }
 }
 
+.bg-brief {
+  @extend %img;
+  @extend %imgBg;
+  position: fixed;
+  @media (min-width:$mobileSmall){
+    width: toRem(2471); 
+  }
+  @media (max-width:$mobileSmall){
+    width: toRem(1306); 
+
+  }
+}
+
 %emojiBody {
   position: absolute;
   font-size: 50px;
@@ -2027,5 +2040,169 @@
 
 
 // SECTION  ==============================================================
+.brief {
+  position: relative;
+  // .brief__container
+  &__container {
+    
+  }
+	// .brief__title
+	&__title {
+    @extend %avMB-40-30;
+	}
+	// .brief__options
+	&__options {
+    max-width: toRem(650);
+    margin-inline: auto;
+    position: relative;
+  }
+	// .brief__button
+	&__button {
+    @extend %minWidthBtn-216;
+    &._disabled {
+      opacity: .3;
+    }
+    @media (min-width:$mobileSmall){
+      margin-left: auto;
+    }
+	}
+	// .brief__emoji
+	&__emoji {
+    @media (min-width:$tablet){
+      pointer-events: none;
+      position: absolute;
+      z-index: -1;
+      margin-inline: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 100%;
+      height: toRem(500);
+      max-width: toRem(1440);
+      .emoji {
+        .emoji__item--1 {
+          display: none;
+        }
+      }
+    }
+    @media (max-width:$tablet){
+      display: none;
+    }
+	}
+}
+
+.error-msg {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 2;
+  border-radius: toRem(30);
+  color: #fff;
+  background: linear-gradient(315deg, #f4004c 0%, #f09 100%);
+  padding: toRem(20);
+     box-shadow: 0 4px 50px 0 rgba(33, 5, 41, 0.12), 0 4px 10px 0 rgba(33, 5, 41, 0.06);
+     width: 100%;
+     max-width: toRem(300);
+     text-align: center;
+     @media (max-width:$mobileSmall){
+       max-width: calc(100vw - toRem(40)); 
+     }
+  p {
+    @extend %fontWeight700;
+  }
+}
+
+.option {
+  // .option__items
+	&__items {
+    &:not(:last-child) {
+       @extend %avMB-40-30;
+    }
+	}
+	// .option__item
+	&__item {
+     position: relative;
+     &:not(:last-child) {
+      @extend %avMB-20-15;
+     }
+    @media (any-hover: hover){
+      &:hover{
+        .option__label {
+          color: $red;
+          .box::after {
+            background-color: $red;
+          }
+        }
+      }
+    }
+	}
+	// .option__input
+	&__input {
+    display: none;
+    &:checked {
+      + .option__label {
+        .box {
+        }
+        .box::after {
+          background-color: $red;
+        }
+      }
+    }
+	}
+	// .option__label
+	&__label {
+    line-height: 1.3;
+    cursor: pointer;
+    @extend %flexCenter;
+    gap: toRem(10);
+    @extend %fontWeight700;
+    @extend %transitionColor;
+    @media (max-width:$mobileSmall){
+      min-height: toRem(55); 
+      border-radius: toRem(30);
+      background-color: #fff;
+      padding: toRem(15);
+    }
+    .box {
+      flex: 0 0 auto;
+      position: relative;
+      display: block;
+      border-radius: 50%;
+      align-self: flex-start;
+      @media (min-width:$mobileSmall){
+        width: toRem(20);
+        height: toRem(20);
+        background-color: #fff;
+      }
+      @media (max-width:$mobileSmall){
+        width: toRem(25);
+        height: toRem(25);
+        background-color: #D3FDFC;
+      }
+      &::after {
+        transition: transform 0.5s ease 0s;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background-color: transparent;
+        border-radius: 50%;
+        transition: background-color .3s ease;
+        @media (min-width:$mobileSmall){
+          width: toRem(12);
+          height: toRem(12);
+        }
+        @media (max-width:$mobileSmall){
+          width: toRem(15);
+          height: toRem(15);
+        }
+      }
+    }
+	}
+}
+
+
 // SECTION  ==============================================================
 // SECTION  ==============================================================

@@ -7,7 +7,137 @@
 		<div class="wrapper page--brief">
 			@@include('html/_header.htm',{})
 			<main class="main">
-				
+				<picture>
+					<source srcset="@img/bg/bg-brief.svg" media="(min-width: 30.061em)" type="image/svg+xml">
+					<source srcset="@img/bg/bg-brief-mb.svg" media="(max-width: 30.061em)" type="image/svg+xml">
+					<img class="bg-brief" src="@img/bg/bg-brief.svg" width="1959" height="995" alt="background">
+				</picture>
+				<section class="brief pt-180-160 pb-130-100">
+					<div class="brief__container">
+						<h1 class="brief__title title-av">Оберіть необхідну послугу:</h1>
+						<form class="brief__options">
+							<div class="option__items">
+								<div class="option__item">
+									<input id="option-1" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-1" class="option__label">
+										<span class="box"></span>
+										Концепція та стратегія просування ТікТок
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-2" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-2" class="option__label">
+										<span class="box"></span>
+										Відео-продакшн різної складності
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-3" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-3" class="option__label">
+										<span class="box"></span>
+										Інтеграції в ТікТок-блогерів
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-4" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-4" class="option__label">
+										<span class="box"></span>
+										Підбір амбасадорів
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-5" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-5" class="option__label">
+										<span class="box"></span>
+										Консалтинг (аудит поточної сторінки і ніші бренду + висновки та рекомендації по подальшому веденню)
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-6" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-6" class="option__label">
+										<span class="box"></span>
+										Тренінги/консультації по успішному веденню сторінок
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-7" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-7" class="option__label">
+										<span class="box"></span>
+										Ведення тікток сторінок під ключ
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-8" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-8" class="option__label">
+										<span class="box"></span>
+										Гібридне ведення сторінок (окремо скрипти, окремо зйомка)
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-9" class="option__input" type="radio" name="service" value="brief-form.html">
+									<label for="option-9" class="option__label">
+										<span class="box"></span>
+										UGC/EGC контент
+									</label>
+								</div>
+								<div class="option__item">
+									<input id="option-10" class="option__input" type="radio" name="service" value="https://localworkarea.github.io/OMG-TikTok-Studio/brief-form.html">
+									<label for="option-10" class="option__label">
+										<span class="box"></span>
+										Розробка і реалізація спецпроєктів (конкурси, маски, активації тощо)
+									</label>
+								</div>
+							</div>
+							<button data-option-error="Виберіть необхідну послугу" class="brief__button btn btn--red" type="submit">
+								<span class="btn__txt">Далі</span>
+							</button>
+						</form>
+					
+					  <!-- <form class="brief__options">
+    <button class="brief__button" data-option-error="Выберите опцию">Далее</button>
+  </form> -->
+
+					</div>
+					<div class="brief__emoji">
+						<div class="emoji">
+							<div  class="emoji__item emoji__item--1">
+								<div data-prlx-mouse class="emoji__wr">
+									<span>🤝</span>
+								</div>
+							</div>
+							<div  class="emoji__item emoji__item--2">
+								<div data-prlx-mouse data-prlx-dxr data-prlx-dyr class="emoji__wr">
+									<span>👋</span>
+								</div>
+							</div>
+							<div class="emoji__item emoji__item--3">
+								<div data-prlx-mouse data-prlx-dxr data-prlx-dyr class="emoji__wr">
+									<span>🤩</span>
+								</div>
+							</div>
+							<div class="emoji__item emoji__item--4">
+								<div data-prlx-mouse class="emoji__wr">
+									<span>😉</span>
+								</div>
+							</div>
+							<div class="emoji__item emoji__item--5">
+								<div data-prlx-mouse class="emoji__wr">
+									<span>🫰</span>
+								</div>
+							</div>
+							<div class="emoji__item emoji__item--6">
+								<div data-prlx-mouse class="emoji__wr">
+									<span>😎</span>
+								</div>
+							</div>
+							<div class="emoji__item emoji__item--7">
+								<div data-prlx-mouse class="emoji__wr">
+									<span>👍</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 			</main>
 			@@include('html/_footer.htm',{})
 		</div>

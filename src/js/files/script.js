@@ -314,18 +314,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// == Подсчет четного количества элементов, если четное то выводим класс _items-even =
 	const listEmoji = document.querySelector(".list-emoji__list");
-	if (!listEmoji) return;
-
-	const itemsEmojji = listEmoji.querySelectorAll(".list-emoji__item");
-	const itemsCount = itemsEmojji.length;
-
-	// Если общее количество чётное — добавляем класс списку
-	if (itemsCount % 2 === 0) {
-	  listEmoji.classList.add("_items-even");
-
-	  // И отдельно отмечаем последний элемент как чётный
-	  const lastItem = itemsEmojji[itemsCount - 1];
-	  lastItem.classList.add("_even-last");
+	if (listEmoji) {
+		const itemsEmojji = listEmoji.querySelectorAll(".list-emoji__item");
+		const itemsCount = itemsEmojji.length;
+	
+		// Если общее количество чётное — добавляем класс списку
+		if (itemsCount % 2 === 0) {
+			listEmoji.classList.add("_items-even");
+	
+			// И отдельно отмечаем последний элемент как чётный
+			const lastItem = itemsEmojji[itemsCount - 1];
+			lastItem.classList.add("_even-last");
+		}
 	}
 	// =======================
 
@@ -370,6 +370,66 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 	// ==============================================================
+
+
+ const formOptions = document.querySelector('.brief__options');
+ if (formOptions) {
+	 const button = formOptions.querySelector('.brief__button');
+	 const radios = formOptions.querySelectorAll('input[type="radio"]');
+	 
+	 const errorMsgText = button.dataset.optionError;
+	 
+	 const removeErrorMsg = () => {
+		 const existingError = formOptions.querySelector('.error-msg');
+		 if (existingError) {
+			 existingError.remove();
+		 }
+	 };
+	 
+	 const createErrorMsg = () => {
+		 removeErrorMsg();
+	 
+		 const div = document.createElement('div');
+		 div.className = 'error-msg';
+		 div.innerHTML = `<p>${errorMsgText}</p>`;
+	 
+		 formOptions.appendChild(div);
+	 
+		 setTimeout(() => {
+			 div.remove();
+		 }, 3000);
+	 };
+	 
+	 const updateButtonState = () => {
+		 const selected = formOptions.querySelector('input[type="radio"]:checked');
+		 if (selected) {
+			 button.classList.remove('_disabled');
+			 removeErrorMsg();
+		 } else {
+			 button.classList.add('_disabled');
+		 }
+	 };
+	 
+	 radios.forEach(radio => {
+		 radio.addEventListener('change', updateButtonState);
+	 });
+	 
+	 button.addEventListener('click', (e) => {
+		 const selected = formOptions.querySelector('input[type="radio"]:checked');
+	 
+		 if (button.classList.contains('_disabled')) {
+			 e.preventDefault(); // На всякий случай, если это внутри <form>
+			 createErrorMsg();
+		 } else if (selected) {
+			
+			 window.location.href = selected.value; // тут же октріваем
+			//  window.open(selected.value, '_blank'); // открываем в новой вкладке
+		 }
+	 });
+
+	 
+	 updateButtonState();
+ }
 
 	
 });

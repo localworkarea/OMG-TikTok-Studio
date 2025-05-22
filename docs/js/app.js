@@ -4422,13 +4422,14 @@
             }));
         }));
         const listEmoji = document.querySelector(".list-emoji__list");
-        if (!listEmoji) return;
-        const itemsEmojji = listEmoji.querySelectorAll(".list-emoji__item");
-        const itemsCount = itemsEmojji.length;
-        if (itemsCount % 2 === 0) {
-            listEmoji.classList.add("_items-even");
-            const lastItem = itemsEmojji[itemsCount - 1];
-            lastItem.classList.add("_even-last");
+        if (listEmoji) {
+            const itemsEmojji = listEmoji.querySelectorAll(".list-emoji__item");
+            const itemsCount = itemsEmojji.length;
+            if (itemsCount % 2 === 0) {
+                listEmoji.classList.add("_items-even");
+                const lastItem = itemsEmojji[itemsCount - 1];
+                lastItem.classList.add("_even-last");
+            }
         }
         const articlesCases = document.querySelectorAll(".article-cases");
         if (articlesCases.length > 0) {
@@ -4455,6 +4456,44 @@
                     if (!article.contains(e.target)) article.classList.remove("_open");
                 }));
             }));
+        }
+        const formOptions = document.querySelector(".brief__options");
+        if (formOptions) {
+            const button = formOptions.querySelector(".brief__button");
+            const radios = formOptions.querySelectorAll('input[type="radio"]');
+            const errorMsgText = button.dataset.optionError;
+            const removeErrorMsg = () => {
+                const existingError = formOptions.querySelector(".error-msg");
+                if (existingError) existingError.remove();
+            };
+            const createErrorMsg = () => {
+                removeErrorMsg();
+                const div = document.createElement("div");
+                div.className = "error-msg";
+                div.innerHTML = `<p>${errorMsgText}</p>`;
+                formOptions.appendChild(div);
+                setTimeout((() => {
+                    div.remove();
+                }), 3e3);
+            };
+            const updateButtonState = () => {
+                const selected = formOptions.querySelector('input[type="radio"]:checked');
+                if (selected) {
+                    button.classList.remove("_disabled");
+                    removeErrorMsg();
+                } else button.classList.add("_disabled");
+            };
+            radios.forEach((radio => {
+                radio.addEventListener("change", updateButtonState);
+            }));
+            button.addEventListener("click", (e => {
+                const selected = formOptions.querySelector('input[type="radio"]:checked');
+                if (button.classList.contains("_disabled")) {
+                    e.preventDefault();
+                    createErrorMsg();
+                } else if (selected) window.location.href = selected.value;
+            }));
+            updateButtonState();
         }
     }));
     let inputmaskLoaded = false;
