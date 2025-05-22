@@ -430,6 +430,31 @@ document.addEventListener("DOMContentLoaded", () => {
 	 updateButtonState();
  }
 
+
+
+  const scrollUpBtn = document.querySelector('.sroll-up');
+
+	if (scrollUpBtn) {
+		// Показ/скрытие кнопки при скролле
+		const toggleScrollUpButton = () => {
+			if (window.scrollY > 300) {
+				scrollUpBtn.classList.add('_show');
+			} else {
+				scrollUpBtn.classList.remove('_show');
+			}
+		};
+	
+		scrollUpBtn.addEventListener('click', () => {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		});
+	
+		window.addEventListener('scroll', toggleScrollUpButton);
+	
+		toggleScrollUpButton();
+	}
 	
 });
 

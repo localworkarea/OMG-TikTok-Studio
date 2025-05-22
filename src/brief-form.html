@@ -15,9 +15,69 @@
 				<section class="brief pt-180-160 pb-130-100">
 					<div class="brief__container">
 						<h1 class="brief__title title-av">Ведення TikTok сторінки під ключ</h1>
-					
-
-						<div class="emoji">
+						<form class="brief__form form-brief">
+							<div class="form-brief__step title-sm"><span>1</span> Загальна інформація про бренд</div>
+							<div class="form-brief__block">
+								<div class="form__item">
+									<label for="form-brief-1" class="form__label">Контактна особа:</label>
+									<input id="form-brief-1" autocomplete="off" type="text" name="form[]" placeholder="Контактна особа" class="input">
+								</div>
+								<div class="form__item">
+									<label for="form-brief-2" class="form__label">Контактна данні:</label>
+									<input id="form-brief-2" autocomplete="off" type="email" name="form[]" placeholder="Ваша пошта" class="input">
+									<input autocomplete="off" data-mask inputmode="numeric" type="tel" name="form[]" placeholder="Номер телефону" class="input">
+									<input  autocomplete="off" type="text" name="form[]" placeholder="Ваш телеграм" class="input">
+								</div>
+								<div class="form__item">
+									<div class="form__label">Тип інтеграції:</div>
+									<div class="option__item">
+										<input id="option-1" class="option__input" type="radio" name="typeIntegration" value="UGC" checked>
+										<label for="option-1" class="option__label">
+											<span class="box"></span>
+											UGC
+										</label>
+									</div>
+									<div class="option__item">
+										<input id="option-2" class="option__input" type="radio" name="typeIntegration" value="EGC">
+										<label for="option-2" class="option__label">
+											<span class="box"></span>
+											EGC
+										</label>
+									</div>
+									<div class="option__item">
+										<input id="option-3" class="option__input" type="radio" name="typeIntegration" value="Інфлюєнсери">
+										<label for="option-3" class="option__label">
+											<span class="box"></span>
+											Інфлюєнсери
+										</label>
+									</div>
+								</div>
+								<div class="form__item">
+									<label for="form-brief-4" class="form__label">Опишіть проблему / задачу, яка є наразі:</label>
+									<div class="form__textarea">
+										<textarea  id="form-brief-4" class="input"></textarea>
+									</div>
+								</div>
+								<div class="form__item">
+									<label for="form-brief-5" class="form__label">Офіційний сайт / соцмережі:</label>
+									<input id="form-brief-5" autocomplete="off" type="url" name="form[]" placeholder="Посилання" class="input">
+								</div>
+							</div>
+							<div class="form-brief__footer">
+								<button type="button" class="form-brief__btn prev btn btn--gray-3">
+									<span class="btn__txt">Назад</span>
+								</button>
+								<div class="form-brief__fraction">
+									<span>1</span>\<span>2</span>
+								</div>
+								<button type="button" class="form-brief__btn next btn btn--red">
+									<span class="btn__txt">Далі</span>
+								</button>
+							</div>
+						</form>
+					</div>
+					<div data-prlx-parent class="brief__emoji">
+						<div data-prlx class="emoji">
 							<div  class="emoji__item emoji__item--1">
 								<div data-prlx-mouse class="emoji__wr">
 									<span>🤝</span>
@@ -60,6 +120,7 @@
 			@@include('html/_footer.htm',{})
 		</div>
 		@@include('html/_popup.htm',{})
+		@@include('html/_scroll-up.htm',{})
 		@@include('html/_js.htm',{})
 	</body>
 </html>

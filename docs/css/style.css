@@ -144,6 +144,7 @@ body {
 .article__body h5,
 .article__body h6,
 .card-item__title,
+.form__label,
 .head-article__title,
 .progress__num,
 .title-av,
@@ -158,6 +159,7 @@ body {
 .card-item__footer,
 .cards-link__footer,
 .error-msg p,
+.form-brief__fraction,
 .form-trends__item .input,
 .option__label,
 .progress__item p,
@@ -244,6 +246,7 @@ body {
 .emoji__item,
 .list-emoji__emoji,
 .progress__num,
+.sroll-up,
 .swiper-button {
   display: grid;
   place-items: center
@@ -254,6 +257,8 @@ body {
 .card-item__footer,
 .cards-link__footer,
 .clients__block,
+.form-brief__footer,
+.form-brief__step,
 .hero__btns,
 .option__label,
 .progress__item,
@@ -374,6 +379,13 @@ body {
   color: #fff
 }
 .btn--gray-2::before {
+  background-color: #fff
+}
+.btn--gray-3 {
+  background: rgba(0,0,0,.4);
+  color: #fff
+}
+.btn--gray-3::before {
   background-color: #fff
 }
 .btn--white {
@@ -547,6 +559,44 @@ body {
   -webkit-filter: invert(97%) sepia(44%) saturate(946%) hue-rotate(153deg) brightness(88%) contrast(87%);
   filter: invert(97%) sepia(44%) saturate(946%) hue-rotate(153deg) brightness(88%) contrast(87%)
 }
+.sroll-up {
+  position: fixed;
+  z-index: 5;
+  bottom: 3.125rem;
+  right: 3.125rem;
+  width: 3.125rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: background-color .3s ease,opacity .45s ease,-webkit-transform .45s ease;
+  transition: background-color .3s ease,transform .45s ease,opacity .45s ease;
+  transition: background-color .3s ease,transform .45s ease,opacity .45s ease,-webkit-transform .45s ease;
+  box-shadow: 0 4px 50px 0 rgba(33,5,41,.12),0 4px 10px 0 rgba(33,5,41,.06);
+  padding-bottom: .1875rem;
+  opacity: 0;
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+  pointer-events: none;
+  visibility: hidden
+}
+.loaded .sroll-up {
+  visibility: visible
+}
+.sroll-up._show {
+  opacity: 1;
+  pointer-events: all;
+  -webkit-transform: translateY(0);
+  transform: translateY(0)
+}
+.sroll-up:active {
+  background-color: #000
+}
+.sroll-up:active svg path {
+  stroke: #fff
+}
+.sroll-up svg path {
+  transition: stroke .3s ease
+}
 body::after {
   content: "";
   background-color: rgba(0,0,0,.3);
@@ -713,8 +763,10 @@ textarea {
   opacity: 0
 }
 textarea.input {
-  resize: none;
-  padding: 0 0
+  resize: none
+}
+.form__label {
+  margin-bottom: .625rem
 }
 .file-input .input-file {
   display: none
@@ -792,6 +844,93 @@ textarea.input {
 }
 .msg__txt {
   font-weight: 700
+}
+.error-msg {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  z-index: 2;
+  border-radius: 1.875rem;
+  color: #fff;
+  background: linear-gradient(315deg,#f4004c 0,#f09 100%);
+  padding: 1.25rem;
+  box-shadow: 0 4px 50px 0 rgba(33,5,41,.12),0 4px 10px 0 rgba(33,5,41,.06);
+  width: 100%;
+  max-width: 18.75rem;
+  text-align: center
+}
+.option__item {
+  position: relative;
+  margin-bottom: .625rem
+}
+.option__input {
+  display: none
+}
+.option__input:checked+.option__label .box::after {
+  background-color: #ff004f
+}
+.option__label {
+  line-height: 1.3;
+  cursor: pointer;
+  gap: .625rem
+}
+.option__label .box {
+  flex: 0 0 auto;
+  position: relative;
+  display: block;
+  border-radius: 50%;
+  align-self: flex-start
+}
+.option__label .box::after {
+  transition: -webkit-transform .5s ease 0s;
+  transition: transform .5s ease 0s;
+  transition: transform .5s ease 0s,-webkit-transform .5s ease 0s;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  background-color: rgba(0,0,0,0);
+  border-radius: 50%;
+  transition: background-color .3s ease
+}
+.form-brief__step {
+  gap: .625rem;
+  line-height: 1.2
+}
+.form-brief__step span {
+  display: grid;
+  place-items: center;
+  align-self: flex-start;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(315deg,#f4004c 0,#f09 100%)
+}
+.form-brief__footer {
+  justify-content: space-between;
+  gap: 1.25rem
+}
+.form-brief__btn {
+  max-width: 9.375rem
+}
+.form-brief__fraction {
+  text-align: center;
+  color: #ff004f
+}
+.form-brief .form__item .input:not(:last-child) {
+  margin-bottom: .625rem
+}
+.form-brief .form__item .form__textarea {
+  overflow: hidden;
+  border-radius: 2.5rem
+}
+.form-brief .form__item .form__textarea textarea.input {
+  padding-block: .9375rem
 }
 .form-trends__item {
   position: relative;
@@ -1943,57 +2082,6 @@ textarea.input {
 .brief__button._disabled {
   opacity: .3
 }
-.error-msg {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  z-index: 2;
-  border-radius: 1.875rem;
-  color: #fff;
-  background: linear-gradient(315deg,#f4004c 0,#f09 100%);
-  padding: 1.25rem;
-  box-shadow: 0 4px 50px 0 rgba(33,5,41,.12),0 4px 10px 0 rgba(33,5,41,.06);
-  width: 100%;
-  max-width: 18.75rem;
-  text-align: center
-}
-.option__item {
-  position: relative
-}
-.option__input {
-  display: none
-}
-.option__input:checked+.option__label .box::after {
-  background-color: #ff004f
-}
-.option__label {
-  line-height: 1.3;
-  cursor: pointer;
-  gap: .625rem
-}
-.option__label .box {
-  flex: 0 0 auto;
-  position: relative;
-  display: block;
-  border-radius: 50%;
-  align-self: flex-start
-}
-.option__label .box::after {
-  transition: -webkit-transform .5s ease 0s;
-  transition: transform .5s ease 0s;
-  transition: transform .5s ease 0s,-webkit-transform .5s ease 0s;
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  background-color: rgba(0,0,0,0);
-  border-radius: 50%;
-  transition: background-color .3s ease
-}
 @media (min-width:30.06125em) {
   .block-info__btn,
   .brief__button,
@@ -2012,6 +2100,15 @@ textarea.input {
   }
   .file-input__txts .input-file-att {
     max-width: 180px
+  }
+  .option__label .box {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #fff
+  }
+  .option__label .box::after {
+    width: .75rem;
+    height: .75rem
   }
   .footer__logo {
     margin-bottom: 1.5625rem
@@ -2076,17 +2173,12 @@ textarea.input {
   .brief__button {
     margin-left: auto
   }
-  .option__label .box {
-    width: 1.25rem;
-    height: 1.25rem;
-    background-color: #fff
-  }
-  .option__label .box::after {
-    width: .75rem;
-    height: .75rem
-  }
 }
 @media (min-width:37.56125em) {
+  .form-brief {
+    max-width: 31.875rem;
+    margin-inline: auto
+  }
   .footer__bottom p {
     flex: 1
   }
@@ -2466,10 +2558,10 @@ textarea.input {
     position: absolute;
     z-index: -1;
     margin-inline: auto;
-    top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+    top: 12.5rem;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
     width: 100%;
     height: 31.25rem;
     max-width: 90rem
@@ -2557,6 +2649,7 @@ textarea.input {
   .cases-home__title:not(:last-child),
   .clients__title,
   .faq__title,
+  .form-brief__block:not(:last-child),
   .grid-block__list:not(:last-child),
   .grid-block__title,
   .list-emoji__title,
@@ -2568,7 +2661,8 @@ textarea.input {
   .team__title {
     margin-bottom: 2.5rem
   }
-  .option__item:not(:last-child),
+  .brief__options .option__item:not(:last-child),
+  .form-brief__step,
   .spollers__item:not(:last-child) {
     margin-bottom: 1.25rem
   }
@@ -2605,6 +2699,18 @@ textarea.input {
   }
   .msg__title {
     font-size: 2.375rem
+  }
+  .form-brief__step span {
+    width: 2.5rem
+  }
+  .form-brief__footer {
+    margin-top: 2.5rem
+  }
+  .form-brief .form__item:not(:last-child) {
+    margin-bottom: 1.5625rem
+  }
+  .form-brief .form__item .form__textarea textarea.input {
+    min-height: 12.5rem
   }
   .hero__title:not(:last-child) {
     margin-bottom: 1.75rem
@@ -2980,6 +3086,10 @@ textarea.input {
   }
 }
 @media (max-width:37.56125em) {
+  .sroll-up {
+    right: 1.25rem;
+    bottom: 1.25rem
+  }
   .footer__bottom p {
     margin-top: .9375rem
   }
@@ -3078,6 +3188,7 @@ textarea.input {
   .cases-home__title:not(:last-child),
   .clients__title,
   .faq__title,
+  .form-brief__block:not(:last-child),
   .grid-block__list:not(:last-child),
   .grid-block__title,
   .list-emoji__title,
@@ -3089,7 +3200,8 @@ textarea.input {
   .team__title {
     margin-bottom: 1.875rem
   }
-  .option__item:not(:last-child),
+  .brief__options .option__item:not(:last-child),
+  .form-brief__step,
   .spollers__item:not(:last-child) {
     margin-bottom: .9375rem
   }
@@ -3129,6 +3241,36 @@ textarea.input {
   }
   .msg__title {
     font-size: 1.75rem
+  }
+  .error-msg {
+    max-width: calc(100vw - 2.5rem)
+  }
+  .option__label {
+    min-height: 3.4375rem;
+    border-radius: 1.875rem;
+    background-color: #fff;
+    padding: .9375rem
+  }
+  .option__label .box {
+    width: 1.5625rem;
+    height: 1.5625rem;
+    background-color: #d3fdfc
+  }
+  .option__label .box::after {
+    width: .9375rem;
+    height: .9375rem
+  }
+  .form-brief__step span {
+    width: 2.25rem
+  }
+  .form-brief__footer {
+    margin-top: 1.875rem
+  }
+  .form-brief .form__item:not(:last-child) {
+    margin-bottom: 1.25rem
+  }
+  .form-brief .form__item .form__textarea textarea.input {
+    min-height: 9.375rem
   }
   .header {
     top: 1.25rem
@@ -3242,24 +3384,6 @@ textarea.input {
   .head-article .bg-blog {
     top: 90%
   }
-  .error-msg {
-    max-width: calc(100vw - 2.5rem)
-  }
-  .option__label {
-    min-height: 3.4375rem;
-    border-radius: 1.875rem;
-    background-color: #fff;
-    padding: .9375rem
-  }
-  .option__label .box {
-    width: 1.5625rem;
-    height: 1.5625rem;
-    background-color: #d3fdfc
-  }
-  .option__label .box::after {
-    width: .9375rem;
-    height: .9375rem
-  }
 }
 @media (max-width:23.49875em) {
   .file-input__label,
@@ -3336,6 +3460,7 @@ textarea.input {
   .cases-home__title:not(:last-child),
   .clients__title,
   .faq__title,
+  .form-brief__block:not(:last-child),
   .grid-block__list:not(:last-child),
   .grid-block__title,
   .list-emoji__title,
@@ -3347,7 +3472,8 @@ textarea.input {
   .team__title {
     margin-bottom: clamp(1.875rem ,1.5618619792rem + 1.0416666667vw ,2.5rem)
   }
-  .option__item:not(:last-child),
+  .brief__options .option__item:not(:last-child),
+  .form-brief__step,
   .spollers__item:not(:last-child) {
     margin-bottom: clamp(.9375rem ,.7809309896rem + .5208333333vw ,1.25rem)
   }
@@ -3376,6 +3502,18 @@ textarea.input {
   }
   .msg__title {
     font-size: clamp(1.75rem ,1.4368619792rem + 1.0416666667vw ,2.375rem)
+  }
+  .form-brief__step span {
+    width: clamp(2.25rem ,2.1247447917rem + .4166666667vw ,2.5rem)
+  }
+  .form-brief__footer {
+    margin-top: clamp(1.875rem ,1.5618619792rem + 1.0416666667vw ,2.5rem)
+  }
+  .form-brief .form__item:not(:last-child) {
+    margin-bottom: clamp(1.25rem ,1.0934309896rem + .5208333333vw ,1.5625rem)
+  }
+  .form-brief .form__item .form__textarea textarea.input {
+    min-height: clamp(9.375rem ,7.8093098958rem + 5.2083333333vw ,12.5rem)
   }
   .hero__title:not(:last-child) {
     margin-bottom: clamp(.9375rem ,.5304205729rem + 1.3541666667vw ,1.75rem)
@@ -3558,6 +3696,10 @@ textarea.input {
     color: #000;
     border-color: #000
   }
+  .btn--gray-3:hover {
+    color: #000;
+    border-color: #000
+  }
   .btn--white:hover {
     color: #fff;
     border-color: #000
@@ -3572,11 +3714,23 @@ textarea.input {
     -webkit-filter: invert(0) sepia(0) saturate(0) hue-rotate(48deg) brightness(94%) contrast(100%);
     filter: invert(0) sepia(0) saturate(0) hue-rotate(48deg) brightness(94%) contrast(100%)
   }
+  .sroll-up:hover {
+    background-color: #000
+  }
+  .sroll-up:hover svg path {
+    stroke: #fff
+  }
   .popup__close:hover {
     background-color: rgba(0,0,0,.1)
   }
   .file-input__remove:hover {
     background-color: rgba(0,0,0,.5)
+  }
+  .option__item:hover .option__label {
+    color: #ff004f
+  }
+  .option__item:hover .option__label .box::after {
+    background-color: #ff004f
   }
   .form-trends__item:hover::before {
     margin: 0
@@ -3645,11 +3799,5 @@ textarea.input {
   }
   .article__body p a:hover {
     color: #25f4ee
-  }
-  .option__item:hover .option__label {
-    color: #ff004f
-  }
-  .option__item:hover .option__label .box::after {
-    background-color: #ff004f
   }
 }
