@@ -416,9 +416,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	 
 	 button.addEventListener('click', (e) => {
 		 const selected = formOptions.querySelector('input[type="radio"]:checked');
-	 
+		 e.preventDefault();
 		 if (button.classList.contains('_disabled')) {
-			 e.preventDefault(); // На всякий случай, если это внутри <form>
 			 createErrorMsg();
 		 } else if (selected) {
 			

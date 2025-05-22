@@ -4488,10 +4488,8 @@
             }));
             button.addEventListener("click", (e => {
                 const selected = formOptions.querySelector('input[type="radio"]:checked');
-                if (button.classList.contains("_disabled")) {
-                    e.preventDefault();
-                    createErrorMsg();
-                } else if (selected) window.location.href = selected.value;
+                e.preventDefault();
+                if (button.classList.contains("_disabled")) createErrorMsg(); else if (selected) window.location.href = selected.value;
             }));
             updateButtonState();
         }
