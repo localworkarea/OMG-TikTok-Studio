@@ -742,9 +742,11 @@
         @media (min-width:toEm(600.98)){
           border-radius: 50% / 43%;
           filter: blur(200px);
+          backdrop-filter: blur(200px);
         }
         @media (max-width: toEm(600.98)){
           filter: blur(150px);            
+          backdrop-filter: blur(150px);
         }
       }
     }

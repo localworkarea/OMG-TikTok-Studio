@@ -2022,7 +2022,8 @@ textarea.input {
   .list-emoji__list::before {
     border-radius: 50%/43%;
     -webkit-filter: blur(200px);
-    filter: blur(200px)
+    filter: blur(200px);
+    backdrop-filter: blur(200px)
   }
   .list-emoji__item:nth-child(even) {
     top: 50%
@@ -2883,7 +2884,8 @@ textarea.input {
   }
   .list-emoji__list::before {
     -webkit-filter: blur(150px);
-    filter: blur(150px)
+    filter: blur(150px);
+    backdrop-filter: blur(150px)
   }
   .list-emoji__item:nth-child(6n+1) .list-emoji__emoji.emoji-1 {
     top: -17%;
