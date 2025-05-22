@@ -192,7 +192,7 @@ import './libs/watcher.js'
 import * as flsScroll from "./files/scroll/scroll.js";
 
 // Плавна навігація по сторінці
-// flsScroll.pageNavigation();
+flsScroll.pageNavigation();
 
 // Функціонал додавання класів до хедеру під час прокручування
 flsScroll.headerScroll();

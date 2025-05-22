@@ -1,6 +1,6 @@
 (() => {
     "use strict";
-    const modules_flsModules = {};
+    const flsModules = {};
     let isMobile = {
         Android: function() {
             return navigator.userAgent.match(/Android/i);
@@ -247,7 +247,7 @@
             }
         }
     }
-    function functions_menuClose() {
+    function menuClose() {
         bodyUnlock();
         document.documentElement.classList.remove("menu-open");
     }
@@ -626,7 +626,7 @@
             if (!this.isOpen && this.lastFocusEl) this.lastFocusEl.focus(); else focusable[0].focus();
         }
     }
-    modules_flsModules.popup = new Popup({});
+    flsModules.popup = new Popup({});
     class MousePRLX {
         constructor(props, data = null) {
             let defaultConfig = {
@@ -675,8 +675,8 @@
             }));
         }
     }
-    modules_flsModules.mousePrlx = new MousePRLX({});
-    let gotoblock_gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
+    flsModules.mousePrlx = new MousePRLX({});
+    let gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
         const targetBlockElement = document.querySelector(targetBlock);
         if (targetBlockElement) {
             let headerItem = "";
@@ -701,7 +701,7 @@
                 offset: offsetTop,
                 easing: "easeOutQuad"
             };
-            document.documentElement.classList.contains("menu-open") ? functions_menuClose() : null;
+            document.documentElement.classList.contains("menu-open") ? menuClose() : null;
             if (typeof SmoothScroll !== "undefined") (new SmoothScroll).animateScroll(targetBlockElement, "", options); else {
                 let targetBlockElementPosition = targetBlockElement.getBoundingClientRect().top + scrollY;
                 targetBlockElementPosition = headerItemHeight ? targetBlockElementPosition - headerItemHeight : targetBlockElementPosition;
@@ -837,11 +837,11 @@
                     const checkbox = checkboxes[index];
                     checkbox.checked = false;
                 }
-                if (modules_flsModules.select) {
+                if (flsModules.select) {
                     let selects = form.querySelectorAll("div.select");
                     if (selects.length) for (let index = 0; index < selects.length; index++) {
                         const select = selects[index].querySelector("select");
-                        modules_flsModules.select.selectBuild(select);
+                        flsModules.select.selectBuild(select);
                     }
                 }
             }), 0);
@@ -892,7 +892,7 @@
                 e.preventDefault();
                 if (form.querySelector("._form-error") && form.hasAttribute("data-goto-error")) {
                     const formGoToErrorClass = form.dataset.gotoError ? form.dataset.gotoError : "._form-error";
-                    gotoblock_gotoBlock(formGoToErrorClass, true, 1e3);
+                    gotoBlock(formGoToErrorClass, true, 1e3);
                 }
             }
         }
@@ -903,9 +903,9 @@
                 }
             }));
             setTimeout((() => {
-                if (modules_flsModules.popup) {
+                if (flsModules.popup) {
                     const popup = form.dataset.popupMessage;
-                    popup ? modules_flsModules.popup.open(popup) : null;
+                    popup ? flsModules.popup.open(popup) : null;
                 }
             }), 0);
             formValidate.formClean(form);
@@ -4104,12 +4104,14 @@
             },
             breakpoints: {
                 320: {
-                    slidesPerView: 1,
-                    spaceBetween: 10
+                    slidesPerView: 1.1,
+                    spaceBetween: 10,
+                    centeredSlides: true
                 },
                 768: {
                     slidesPerView: 2,
-                    spaceBetween: 20
+                    spaceBetween: 20,
+                    centeredSlides: true
                 },
                 992: {
                     slidesPerView: 3,
@@ -4205,8 +4207,26 @@
             }));
         }
     }
-    modules_flsModules.watcher = new ScrollWatcher({});
+    flsModules.watcher = new ScrollWatcher({});
     let addWindowScrollEvent = false;
+    function pageNavigation() {
+        document.addEventListener("click", pageNavigationAction);
+        document.addEventListener("watcherCallback", pageNavigationAction);
+        function pageNavigationAction(e) {
+            if (e.type === "click") {
+                const targetElement = e.target;
+                if (targetElement.closest("[data-goto]")) {
+                    const gotoLink = targetElement.closest("[data-goto]");
+                    const gotoLinkSelector = gotoLink.dataset.goto ? gotoLink.dataset.goto : "";
+                    const noHeader = gotoLink.hasAttribute("data-goto-header") ? true : false;
+                    const gotoSpeed = gotoLink.dataset.gotoSpeed ? gotoLink.dataset.gotoSpeed : 500;
+                    const offsetTop = gotoLink.dataset.gotoTop ? parseInt(gotoLink.dataset.gotoTop) : 0;
+                    gotoBlock(gotoLinkSelector, noHeader, gotoSpeed, offsetTop);
+                    e.preventDefault();
+                }
+            }
+        }
+    }
     function headerScroll() {
         addWindowScrollEvent = true;
         const header = document.querySelector("header.header");
@@ -4269,7 +4289,7 @@
                     const sublist = item.querySelector(".menu__sublist");
                     if (sublist && sublist.hasAttribute("hidden")) sublist.removeAttribute("hidden");
                 }));
-                if (bodyLockStatus) functions_menuClose();
+                if (bodyLockStatus) menuClose();
             }
         }
         function setupMenuToggle() {
@@ -4518,6 +4538,11 @@
             }));
         }
     }));
+    const teamList = document.querySelector(".team__list");
+    if (teamList) {
+        const itemsCount = teamList.querySelectorAll(".team__item").length;
+        teamList.classList.add(`_items-${itemsCount}`);
+    }
     window["FLS"] = false;
     addTouchClass();
     addLoadedClass();
@@ -4528,5 +4553,6 @@
         autoHeight: false
     });
     formSubmit();
+    pageNavigation();
     headerScroll();
 })();

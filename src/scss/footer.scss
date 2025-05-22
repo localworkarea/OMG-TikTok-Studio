@@ -1,9 +1,24 @@
+.footer[data-watch] {
+  opacity: 0;
+  // transition: transform 1s cubic-bezier(.22,.89,.34,.96);
+  transition: transform .7s ease, opacity .45s ease;
+  @media (min-width:$mobile){
+    transform: translateY(50%);
+  }
+  @media (max-width:$mobile){    
+    transform: translateY(20%);
+  }
+  &._visible {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
 .footer {
   background-color: #000;
   @include adaptiveValue("border-top-left-radius", 70, 50, 1440.98, 992.98);
   @include adaptiveValue("border-top-right-radius", 70, 50, 1440.98, 992.98);
   @include adaptiveValue("padding-top", 70, 60, 1440.98, 992.98);
-
+  
   // .footer__container
   &__container {}
 

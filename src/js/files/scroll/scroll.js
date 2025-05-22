@@ -27,62 +27,64 @@ export function pageNavigation() {
 				const noHeader = gotoLink.hasAttribute('data-goto-header') ? true : false;
 				const gotoSpeed = gotoLink.dataset.gotoSpeed ? gotoLink.dataset.gotoSpeed : 500;
 				const offsetTop = gotoLink.dataset.gotoTop ? parseInt(gotoLink.dataset.gotoTop) : 0;
-				if (flsModules.fullpage) {
-					const fullpageSection = document.querySelector(`${gotoLinkSelector}`).closest('[data-fp-section]');
-					const fullpageSectionId = fullpageSection ? +fullpageSection.dataset.fpId : null;
-					if (fullpageSectionId !== null) {
-						flsModules.fullpage.switchingSection(fullpageSectionId);
-						document.documentElement.classList.contains("menu-open") ? menuClose() : null;
-					}
-				} else {
+				// if (flsModules.fullpage) {
+				// 	const fullpageSection = document.querySelector(`${gotoLinkSelector}`).closest('[data-fp-section]');
+				// 	const fullpageSectionId = fullpageSection ? +fullpageSection.dataset.fpId : null;
+				// 	if (fullpageSectionId !== null) {
+				// 		flsModules.fullpage.switchingSection(fullpageSectionId);
+				// 		document.documentElement.classList.contains("menu-open") ? menuClose() : null;
+				// 	}
+				// } 
+				// else {
 					gotoBlock(gotoLinkSelector, noHeader, gotoSpeed, offsetTop);
-				}
+				// }
 				e.preventDefault();
 			}
-		} else if (e.type === "watcherCallback" && e.detail) {
-			const entry = e.detail.entry;
-			const targetElement = entry.target;
-			// Обробка пунктів навігації, якщо вказано значення navigator, підсвічуємо поточний пункт меню
-			if (targetElement.dataset.watch === 'navigator') {
-				const navigatorActiveItem = document.querySelector(`[data-goto]._navigator-active`);
-				let navigatorCurrentItem;
-				if (targetElement.id && document.querySelector(`[data-goto="#${targetElement.id}"]`)) {
-					navigatorCurrentItem = document.querySelector(`[data-goto="#${targetElement.id}"]`);
-				} else if (targetElement.classList.length) {
-					for (let index = 0; index < targetElement.classList.length; index++) {
-						const element = targetElement.classList[index];
-						if (document.querySelector(`[data-goto=".${element}"]`)) {
-							navigatorCurrentItem = document.querySelector(`[data-goto=".${element}"]`);
-							break;
-						}
-					}
-				}
-				if (entry.isIntersecting) {
-					// Бачимо об'єкт
-					// navigatorActiveItem ? navigatorActiveItem.classList.remove('_navigator-active') : null;
-					navigatorCurrentItem ? navigatorCurrentItem.classList.add('_navigator-active') : null;
-					//const activeItems = document.querySelectorAll('._navigator-active');
-					//activeItems.length > 1 ? chooseOne(activeItems) : null
-				} else {
-					// Не бачимо об'єкт
-					navigatorCurrentItem ? navigatorCurrentItem.classList.remove('_navigator-active') : null;
-				}
-			}
-		}
+		} 
+		// else if (e.type === "watcherCallback" && e.detail) {
+		// 	const entry = e.detail.entry;
+		// 	const targetElement = entry.target;
+		// 	// Обробка пунктів навігації, якщо вказано значення navigator, підсвічуємо поточний пункт меню
+		// 	if (targetElement.dataset.watch === 'navigator') {
+		// 		const navigatorActiveItem = document.querySelector(`[data-goto]._navigator-active`);
+		// 		let navigatorCurrentItem;
+		// 		if (targetElement.id && document.querySelector(`[data-goto="#${targetElement.id}"]`)) {
+		// 			navigatorCurrentItem = document.querySelector(`[data-goto="#${targetElement.id}"]`);
+		// 		} else if (targetElement.classList.length) {
+		// 			for (let index = 0; index < targetElement.classList.length; index++) {
+		// 				const element = targetElement.classList[index];
+		// 				if (document.querySelector(`[data-goto=".${element}"]`)) {
+		// 					navigatorCurrentItem = document.querySelector(`[data-goto=".${element}"]`);
+		// 					break;
+		// 				}
+		// 			}
+		// 		}
+		// 		if (entry.isIntersecting) {
+		// 			// Бачимо об'єкт
+		// 			// navigatorActiveItem ? navigatorActiveItem.classList.remove('_navigator-active') : null;
+		// 			navigatorCurrentItem ? navigatorCurrentItem.classList.add('_navigator-active') : null;
+		// 			//const activeItems = document.querySelectorAll('._navigator-active');
+		// 			//activeItems.length > 1 ? chooseOne(activeItems) : null
+		// 		} else {
+		// 			// Не бачимо об'єкт
+		// 			navigatorCurrentItem ? navigatorCurrentItem.classList.remove('_navigator-active') : null;
+		// 		}
+		// 	}
+		// }
 	}
-	function chooseOne(activeItems) {
+	// function chooseOne(activeItems) {
 
-	}
+	// }
 	// Прокручування по хешу
-	if (getHash()) {
-		let goToHash;
-		if (document.querySelector(`#${getHash()}`)) {
-			goToHash = `#${getHash()}`;
-		} else if (document.querySelector(`.${getHash()}`)) {
-			goToHash = `.${getHash()}`;
-		}
-		goToHash ? gotoBlock(goToHash, true, 500, 20) : null;
-	}
+	// if (getHash()) {
+	// 	let goToHash;
+	// 	if (document.querySelector(`#${getHash()}`)) {
+	// 		goToHash = `#${getHash()}`;
+	// 	} else if (document.querySelector(`.${getHash()}`)) {
+	// 		goToHash = `.${getHash()}`;
+	// 	}
+	// 	goToHash ? gotoBlock(goToHash, true, 500, 20) : null;
+	// }
 }
 // Робота з шапкою при скролі
 export function headerScroll() {

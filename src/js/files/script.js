@@ -374,6 +374,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 });
 
+
+// Загрузка плагина маски только при клике на поле =================
 let inputmaskLoaded = false;
 
 document.addEventListener("focusin", async function (event) {
@@ -417,10 +419,10 @@ function loadInputMask() {
     document.head.appendChild(script);
   });
 }
+// =====================
 
 
-
-
+// Воспроизведение video элементов, если телефон в эконом режиме или в другом режиме ожидания
 const videoElements = document.querySelectorAll('video');
 
 if (videoElements.length > 0) {
@@ -472,7 +474,6 @@ if (videoElements.length > 0) {
 
 
 // Ticker =================================
-
   const tickers = document.querySelectorAll("[data-ticker]");
 if (tickers.length > 0) {
   tickers.forEach(ticker => {
@@ -513,3 +514,15 @@ if (tickers.length > 0) {
 
 // ====================================================
 
+
+
+// Количество в команде и добавления количества в виде класса ================
+const teamList = document.querySelector('.team__list');
+	if (teamList) {
+		const itemsCount = teamList.querySelectorAll('.team__item').length;
+			// Добавляем класс _items-N
+		teamList.classList.add(`_items-${itemsCount}`);
+		// // Устанавливаем инлайн-переменную --items
+		// teamList.style.setProperty('--items', itemsCount);
+	}
+	// ==============================

@@ -80,8 +80,20 @@
 %transitionOpacity {
   transition: opacity .3s ease;
 }
+%transitionOpacityColor {
+  transition: opacity .3s ease, color .3s ease;
+}
+%transitionTransformOpacity {
+  transition: opacity .45s ease, transform .85s ease;
+}
 
 // Padding ===========
+.pt-180-160 {
+  @include adaptiveValue("padding-top", 180, 160,0,1440.98,480.98);
+}
+.pb-150-130 {
+  @include adaptiveValue("padding-bottom", 150, 130,0,1440.98,480.98);
+}
 %avPT-130-100 {
   @include adaptiveValue("padding-top", 130, 100,0,1440.98,480.98);
 }
@@ -129,6 +141,14 @@
   @include adaptiveValue("margin-bottom", 20, 15,0,1440.98,480.98);
 }
 
+.mb-80 {
+  margin-bottom: toRem(80);
+}
+
+._negative-mb {
+  @include adaptiveValue("margin-bottom", -70, -50,0,1440.98,480.98);
+}
+
 %mb30 {
   &:not(:last-child) {
     margin-bottom: toRem(30);
@@ -148,6 +168,9 @@
 %avBorRad-40-30 {
   @include adaptiveValue("border-radius", 40, 30,0,1440.98,480.98);
 }
+%avBorRad-30-24 {
+  @include adaptiveValue("border-radius", 30, 24,0,1440.98,480.98);
+}
 
 
 %linear-gradient-blue {
@@ -166,6 +189,10 @@
 
 .clr-blue {
    color: $blueDark;
+}
+
+.bg-gray {
+  background-color: #FAFAFA;
 }
 
 %gridCenter {
@@ -196,21 +223,6 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	// &--top {
-	// 	object-position: top;
-	// }
-	// &--bottom {
-	// 	object-position: bottom;
-	// }
-	// &--left {
-	// 	object-position: left;
-	// }
-	// &--right {
-	// 	object-position: right;
-	// }
-	// &--contain {
-	// 	object-fit: contain;
-	// }
 }
 
 %img {
@@ -380,6 +392,7 @@
   }
   &--gray {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.5) 100%);
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.05);
     color: #000;
     &::before {
       background-color: #000;
@@ -399,6 +412,20 @@
     @media (any-hover: hover){
       &:hover{
         color: #000;
+        border-color: #000;
+      }
+    }
+  }
+  &--white {
+    background-color: #fff;
+    color: #000;
+    &::before {
+      background-color: #000;
+    }
+    @media (any-hover: hover){
+      &:hover{
+        color: #fff;
+        border-color: #000;
       }
     }
   }
@@ -555,6 +582,78 @@
   &.swiper-button-disabled {
     opacity: 0.6;
     // pointer-events: none;
+  }
+}
+
+
+.breadcrumb {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  .loaded & {
+    @extend %transitionOpacity;
+    opacity: 1;
+  }
+  @media (min-width:toEm(1150.98)){
+    padding-left: toRem(30);
+  }
+  @media (max-width:toEm(1150.98)) and (min-width:$mobileSmall) { 
+    padding-left: toRem(10);
+  }
+  @media (min-width:$mobileSmall){
+    top: toRem(115);
+  }
+  @media (max-width:$mobileSmall){
+    top: toRem(100);
+  }
+	// .breadcrumb__container--b
+	&__container--b {
+  }
+	// .breadcrumb__list
+	&__list {
+    @extend %flexCenter;
+    gap: toRem(12);
+    overflow-y: hidden;
+    overflow-x: auto;
+    min-height: toRem(25);
+    @media (max-width:$mobile){
+      margin-inline: toRem(-20); 
+      padding-inline: toRem(20);
+      mask-image: linear-gradient(to right, white 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, white 90%, transparent 100%);
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+	}
+	// .breadcrumb__item
+	&__item {
+    white-space: nowrap;
+    font-size: toRem(15);
+    color: #9CD2D3;
+    &:not(:last-child) {
+      a {
+        @extend %flexCenter;
+        gap: toRem(12);
+        @extend %fontWeight400;
+        @extend %transitionColor;
+        @media (any-hover: hover){
+          &:hover{
+            color: #000;
+            &::after {
+              filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(48deg) brightness(94%) contrast(100%);
+            }
+          }
+        }
+        &::after {
+          @extend %afterArrow;
+          width: toRem(10);
+          filter: invert(97%) sepia(44%) saturate(946%) hue-rotate(153deg) brightness(88%) contrast(87%);
+        }
+      }
+    }
   }
 }
 
