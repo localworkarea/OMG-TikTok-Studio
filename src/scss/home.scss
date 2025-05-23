@@ -2018,9 +2018,9 @@
     height: max-content;
     img {
       @extend %img;
-      @media (max-width: toEm(650.98)){
-        aspect-ratio: 352/200;
-      }
+      // @media (max-width: toEm(650.98)){
+        // aspect-ratio: 352/200;
+      // }
     }
     @media (min-width:toEm(650.98)){
       order: 2;

@@ -3081,9 +3081,6 @@ textarea.input {
   .footer__top {
     grid-template-columns: 100%
   }
-  .head-article__img img {
-    aspect-ratio: 352/200
-  }
 }
 @media (max-width:37.56125em) {
   .sroll-up {

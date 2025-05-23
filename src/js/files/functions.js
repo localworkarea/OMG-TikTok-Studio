@@ -1,6 +1,37 @@
 // Підключення списку активних модулів
 import { flsModules } from "./modules.js";
 
+export function handleMenuVisibility() {
+	const mediaQuery992max = window.matchMedia('(max-width: 62.061em)');
+	const menuBody = document.querySelector('.menu__body');
+	const menuItemsWithSublist = document.querySelectorAll('.menu__item.has-sublist');
+	if (mediaQuery992max.matches) {
+		menuItemsWithSublist.forEach(item => {
+			const sublist = item.querySelector('.menu__sublist');
+			if (sublist && !sublist.hidden) {
+				_slideUp(sublist, 0);
+				item.classList.remove('_open');
+			}
+		});
+		if (menuBody && !menuBody.hidden) {
+				_slideUp(menuBody, 0);
+		}
+	} else {
+			if (menuBody && menuBody.hasAttribute('hidden')) {
+				menuBody.removeAttribute('hidden');
+			}
+			menuItemsWithSublist.forEach(item => {
+				const sublist = item.querySelector('.menu__sublist');
+				if (sublist && sublist.hasAttribute('hidden')) {
+					sublist.removeAttribute('hidden');
+				}
+			});
+			 if (bodyLockStatus) {
+				menuClose();
+			 }
+		}
+}
+
 /* Перевірка підтримки webp, додавання класу webp або no-webp для HTML */
 export function isWebp() {
 	// Проверка поддержки webp 

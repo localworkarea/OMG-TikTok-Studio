@@ -197,6 +197,10 @@ flsScroll.pageNavigation();
 // Функціонал додавання класів до хедеру під час прокручування
 flsScroll.headerScroll();
 
+
+
+
+
 // Модуль анімація цифрового лічильника
 // Сніппет(HTML):
 // flsScroll.digitsCounter();

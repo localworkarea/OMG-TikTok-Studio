@@ -1,5 +1,7 @@
 // Підключення функціоналу 
-import { isMobile, menuClose, getHash, FLS } from "../functions.js";
+import { isMobile, menuClose, getHash, FLS, } from "../functions.js";
+// import { handleMenuVisibility } from "../functions.js";
+
 // Підключення доповнення для збільшення можливостей
 // Документація: https://github.com/cferdinandi/smooth-scroll
 // import SmoothScroll from 'smooth-scroll';
@@ -36,11 +38,7 @@ export let gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 
 		// Закриваємо меню, якщо воно відкрите
 		document.documentElement.classList.contains("menu-open") ? menuClose() : null;
 
-		if (typeof SmoothScroll !== 'undefined') {
-			// Прокручування з використанням доповнення
-			new SmoothScroll().animateScroll(targetBlockElement, '', options);
-		} else {
-			// Прокручування стандартними засобами
+	
 			let targetBlockElementPosition = targetBlockElement.getBoundingClientRect().top + scrollY;
 			targetBlockElementPosition = headerItemHeight ? targetBlockElementPosition - headerItemHeight : targetBlockElementPosition;
 			targetBlockElementPosition = offsetTop ? targetBlockElementPosition - offsetTop : targetBlockElementPosition;
@@ -48,10 +46,5 @@ export let gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 
 				top: targetBlockElementPosition,
 				behavior: "smooth"
 			});
-		}
-		// FLS(`[gotoBlock]: Юхуу...їдемо до ${targetBlock}`);
 	} 
-	// else {
-	// 	FLS(`[gotoBlock]: Йой... Такого блоку немає на сторінці: ${targetBlock}`);
-	// }
 };

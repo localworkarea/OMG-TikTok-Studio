@@ -1,6 +1,28 @@
 (() => {
     "use strict";
     const flsModules = {};
+    function handleMenuVisibility() {
+        const mediaQuery992max = window.matchMedia("(max-width: 62.061em)");
+        const menuBody = document.querySelector(".menu__body");
+        const menuItemsWithSublist = document.querySelectorAll(".menu__item.has-sublist");
+        if (mediaQuery992max.matches) {
+            menuItemsWithSublist.forEach((item => {
+                const sublist = item.querySelector(".menu__sublist");
+                if (sublist && !sublist.hidden) {
+                    _slideUp(sublist, 0);
+                    item.classList.remove("_open");
+                }
+            }));
+            if (menuBody && !menuBody.hidden) _slideUp(menuBody, 0);
+        } else {
+            if (menuBody && menuBody.hasAttribute("hidden")) menuBody.removeAttribute("hidden");
+            menuItemsWithSublist.forEach((item => {
+                const sublist = item.querySelector(".menu__sublist");
+                if (sublist && sublist.hasAttribute("hidden")) sublist.removeAttribute("hidden");
+            }));
+            if (bodyLockStatus) menuClose();
+        }
+    }
     let isMobile = {
         Android: function() {
             return navigator.userAgent.match(/Android/i);
@@ -689,23 +711,14 @@
                     }), 0);
                 } else headerItemHeight = headerElement.offsetHeight;
             }
-            let options = {
-                speedAsDuration: true,
-                speed,
-                header: headerItem,
-                offset: offsetTop,
-                easing: "easeOutQuad"
-            };
             document.documentElement.classList.contains("menu-open") ? menuClose() : null;
-            if (typeof SmoothScroll !== "undefined") (new SmoothScroll).animateScroll(targetBlockElement, "", options); else {
-                let targetBlockElementPosition = targetBlockElement.getBoundingClientRect().top + scrollY;
-                targetBlockElementPosition = headerItemHeight ? targetBlockElementPosition - headerItemHeight : targetBlockElementPosition;
-                targetBlockElementPosition = offsetTop ? targetBlockElementPosition - offsetTop : targetBlockElementPosition;
-                window.scrollTo({
-                    top: targetBlockElementPosition,
-                    behavior: "smooth"
-                });
-            }
+            let targetBlockElementPosition = targetBlockElement.getBoundingClientRect().top + scrollY;
+            targetBlockElementPosition = headerItemHeight ? targetBlockElementPosition - headerItemHeight : targetBlockElementPosition;
+            targetBlockElementPosition = offsetTop ? targetBlockElementPosition - offsetTop : targetBlockElementPosition;
+            window.scrollTo({
+                top: targetBlockElementPosition,
+                behavior: "smooth"
+            });
         }
     };
     function formFieldsInit(options = {
@@ -4275,7 +4288,6 @@
     let addWindowScrollEvent = false;
     function pageNavigation() {
         document.addEventListener("click", pageNavigationAction);
-        document.addEventListener("watcherCallback", pageNavigationAction);
         function pageNavigationAction(e) {
             if (e.type === "click") {
                 const targetElement = e.target;
@@ -4286,6 +4298,7 @@
                     const gotoSpeed = gotoLink.dataset.gotoSpeed ? gotoLink.dataset.gotoSpeed : 500;
                     const offsetTop = gotoLink.dataset.gotoTop ? parseInt(gotoLink.dataset.gotoTop) : 0;
                     gotoBlock(gotoLinkSelector, noHeader, gotoSpeed, offsetTop);
+                    handleMenuVisibility();
                     e.preventDefault();
                 }
             }
@@ -4337,25 +4350,6 @@
                 e.preventDefault();
             }));
         }));
-        function handleMenuVisibility() {
-            if (mediaQuery992max.matches) {
-                menuItemsWithSublist.forEach((item => {
-                    const sublist = item.querySelector(".menu__sublist");
-                    if (sublist && !sublist.hidden) {
-                        _slideUp(sublist, 0);
-                        item.classList.remove("_open");
-                    }
-                }));
-                if (menuBody && !menuBody.hidden) _slideUp(menuBody, 0);
-            } else {
-                if (menuBody && menuBody.hasAttribute("hidden")) menuBody.removeAttribute("hidden");
-                menuItemsWithSublist.forEach((item => {
-                    const sublist = item.querySelector(".menu__sublist");
-                    if (sublist && sublist.hasAttribute("hidden")) sublist.removeAttribute("hidden");
-                }));
-                if (bodyLockStatus) menuClose();
-            }
-        }
         function setupMenuToggle() {
             menuItemsWithSublist.forEach((item => {
                 const link = item.querySelector(".menu__link");
